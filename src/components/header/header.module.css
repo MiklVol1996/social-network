@@ -1,0 +1,25 @@
+.header{
+    grid-area: h;
+    display: grid;
+    grid-template-rows: 65px;
+    grid-template-columns: 2fr 10fr;
+    grid-template-areas: "l s";
+}
+
+.header img{
+    width: 100%;
+    height: 100%;
+}
+
+.sward{
+    grid-area: s;
+}
+
+.label{
+    grid-area: l;
+    padding-left: 10px;
+}
+
+.label img{
+    width: 80%;
+}

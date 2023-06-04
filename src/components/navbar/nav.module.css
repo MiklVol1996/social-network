@@ -1,0 +1,28 @@
+.nav{
+    grid-area: n;
+    color: #c5d605;
+    justify-content: center;
+}
+
+.nav-wrap{
+    margin-top: 25px;
+    font-size: 25px;
+    position: relative;
+    left: 30px;
+}
+
+.nav-item{
+    margin-bottom: 7px;
+    height: 30px;
+}
+
+.nav-item-set{
+    margin-top: 30px;
+}
+
+.nav-item :hover{
+    color: #ffc003;
+    font-size: 26.5px;
+    transition: 300ms;
+    cursor: default;
+}
