@@ -9,6 +9,15 @@
     "n c";
 }
 
+.content_wrapper{
+    grid-area: c;
+    height: 100vh;
+    color: aliceblue;
+    border-left: 1px solid #414141;
+    border-right: 1px solid #414141;
+}
+
+
 
 
 

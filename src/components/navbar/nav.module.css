@@ -1,28 +1,49 @@
-.nav{
-    grid-area: n;
-    color: #c5d605;
-    justify-content: center;
-}
-
-.nav-wrap{
+nav {
     margin-top: 25px;
-    font-size: 25px;
-    position: relative;
-    left: 30px;
+    font-size: 22px;
+    grid-area: n;
+    padding-left: 30px;
 }
 
-.nav-item{
-    margin-bottom: 7px;
+.nav-item {
     height: 30px;
+    margin-bottom: 7px;
 }
 
-.nav-item-set{
+nav .nav-item:last-child {
     margin-top: 30px;
 }
 
-.nav-item :hover{
+.usual {
+    text-decoration: none;
     color: #ffc003;
-    font-size: 26.5px;
-    transition: 300ms;
+}
+
+.usual div:last-child {
+    display: none;
+}
+
+.usual:hover {
+    color: #ffc003;
+    font-size: 23px;
+    transition: 100ms;
     cursor: default;
+}
+
+.active {
+    text-decoration: none;
+    color: #71e300;
+    height: 30px;
+    margin-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.inner {
+    width: 10px;
+    height: 0px;
+    border-right: 10px solid #71e300;
+    border-top: 7px solid rgb(0, 0, 0);
+    border-bottom: 7px solid rgb(0, 0, 0);
+    margin-top: 10px;
 }

@@ -1,5 +1,6 @@
 import React from 'react';
 import classes from './profile.module.css';
+import Posts from './posts/Posts'
 
 let Profile = () => {
     return (
@@ -8,28 +9,11 @@ let Profile = () => {
                 <div>
                     ava + description
                 </div>
-                <div>
-                    My Posts
-                    <div>
-                        new post
-                    </div>
-                    <div>
-                        <div>
-                            post 1
-                        </div>
-                        <div>
-                            post 2
-                        </div>
-                        <div>
-                            post 3
-                        </div>
-                    </div>
-                </div>
+                <textarea placeholder='Enter your post...'></textarea>
+                <button>Add post</button>
+                <Posts />
             </div>
-
         </div>
-
-
     )
 }
 export default Profile;

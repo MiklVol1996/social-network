@@ -1,11 +1,9 @@
-.content{
-    grid-area: c;
-    height: 100vh;
-    color: aliceblue;
-    border-left: 1px solid #414141;
-    border-right: 1px solid #414141;
-}
-
 .main-content-block{
     padding: 15px;
+}
+
+textarea{
+    background-color: #d4d4d4;
+    width: 250px;
+    height: 50px;
 }
