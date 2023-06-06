@@ -2,13 +2,16 @@ import React from 'react';
 import Post from './post/Post';
 import classes from './posts.module.css';
 
-let Posts = () => {
+const Posts = ({state}) => {
+
+    let posts = state.map(post => <Post message={post.message} likesCount={post.likesCount}/>)
+
     return (
         <div>
             <div className={classes.title}>
                 My Posts
             </div>
-            <Post message='Come to the dark side...' likesCount='5'/>
+           {posts}
         </div>
     )
 }

@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './nav.module.css';
 import { NavLink } from 'react-router-dom';
 
-let Nav = () => {
+const Nav = () => {
 
   function getClassName({isActive}){
     return isActive? classes.active : classes.usual;

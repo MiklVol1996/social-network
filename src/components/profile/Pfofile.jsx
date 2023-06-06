@@ -1,17 +1,14 @@
 import React from 'react';
 import classes from './profile.module.css';
 import Posts from './posts/Posts'
+import ProfileInfo from './profileInfo/PfofileInfo';
 
-let Profile = () => {
+const Profile = ({state}) => {
     return (
         <div className={classes.content}>
             <div className={classes['main-content-block']}>
-                <div>
-                    ava + description
-                </div>
-                <textarea placeholder='Enter your post...'></textarea>
-                <button>Add post</button>
-                <Posts />
+                <ProfileInfo/>
+                <Posts state={state.posts}/>
             </div>
         </div>
     )

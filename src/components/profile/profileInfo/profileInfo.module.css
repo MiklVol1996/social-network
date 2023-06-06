@@ -1,0 +1,9 @@
+textarea{
+    background-color: #d4d4d4;
+    width: 250px;
+    height: 50px;
+}
+
+.description{
+    margin-bottom: 20px;
+}

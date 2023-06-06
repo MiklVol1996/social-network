@@ -2,7 +2,7 @@ import React from 'react';
 import classes from './header.module.css';
 import sward from '../../images/sward.jpeg'
 
-let Header = () => {
+const Header = () => {
   return (
     <header className={classes.header}>
       <div className={classes.label}>

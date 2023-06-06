@@ -6,15 +6,15 @@ import Profile from './components/profile/Pfofile';
 import { Routes, Route } from 'react-router-dom';
 
 
-const App = () => {
+const App = ({state}) => {
   return (
     <div className='app-wrapper'>
       <Header />
       <Nav />
       <div className='content_wrapper'>
         <Routes>
-        <Route path='/profile' element = {<Profile/>}/>
-        <Route path='/dialogs/*' element = { <Dialogs />}/>
+        <Route path='/profile' element = {<Profile state={state.profilePage}/>}/>
+        <Route path='/dialogs/*' element = { <Dialogs state={state.dialogsPage}/>}/>
         </Routes>
       </div>
     </div>

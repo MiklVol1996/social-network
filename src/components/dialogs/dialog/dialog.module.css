@@ -1,0 +1,15 @@
+.dialog{
+    margin-bottom: 30px;
+    border-bottom: 1px solid #db0707;
+    text-decoration: none;
+    color: rgb(155, 155, 155);
+}
+
+.dialog:hover{
+    cursor: default;
+}
+
+.active{
+    color: aliceblue;
+    text-decoration: none;
+}
