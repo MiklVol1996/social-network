@@ -1,10 +1,10 @@
 import React from 'react';
 import Post from './post/Post';
 import classes from './posts.module.css';
-import { addPostAC, updatePostTextValueAC } from '../../../redux/state';
+import { addPostAC, updatePostTextValueAC } from '../../../redux/profilePageReducer';
 
 const Posts = ({ state, dispatch }) => {
-
+debugger
     let posts = state.posts.map(post => <Post message={post.message} 
         likesCount={post.likesCount} />)
 

@@ -30,7 +30,7 @@ nav .nav-item:last-child {
     cursor: default;
 }
 
-.active {
+.activeGreen {
     text-decoration: none;
     color: #71e300;
     height: 30px;
@@ -39,10 +39,82 @@ nav .nav-item:last-child {
     justify-content: space-between;
 }
 
-.inner {
+.innerGreen {
     width: 10px;
     height: 0px;
     border-right: 10px solid #71e300;
+    border-top: 7px solid rgb(0, 0, 0);
+    border-bottom: 7px solid rgb(0, 0, 0);
+    margin-top: 10px;
+}
+
+.activeRed {
+    text-decoration: none;
+    color: #e31a00;
+    height: 30px;
+    margin-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.innerRed {
+    width: 10px;
+    height: 0px;
+    border-right: 10px solid #e31a00;
+    border-top: 7px solid rgb(0, 0, 0);
+    border-bottom: 7px solid rgb(0, 0, 0);
+    margin-top: 10px;
+}
+
+.activeBlue {
+    text-decoration: none;
+    color: #1e9dc4;
+    height: 30px;
+    margin-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.innerBlue {
+    width: 10px;
+    height: 0px;
+    border-right: 10px solid #1e9dc4;
+    border-top: 7px solid rgb(0, 0, 0);
+    border-bottom: 7px solid rgb(0, 0, 0);
+    margin-top: 10px;
+}
+
+.activePurple {
+    text-decoration: none;
+    color: #c02ce4;
+    height: 30px;
+    margin-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.innerPurple {
+    width: 10px;
+    height: 0px;
+    border-right: 10px solid #c02ce4;
+    border-top: 7px solid rgb(0, 0, 0);
+    border-bottom: 7px solid rgb(0, 0, 0);
+    margin-top: 10px;
+}
+
+.activeYellow {
+    text-decoration: none;
+    color: #e4de2c;
+    height: 30px;
+    margin-bottom: 7px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.innerYellow {
+    width: 10px;
+    height: 0px;
+    border-right: 10px solid #e4de2c;
     border-top: 7px solid rgb(0, 0, 0);
     border-bottom: 7px solid rgb(0, 0, 0);
     margin-top: 10px;
