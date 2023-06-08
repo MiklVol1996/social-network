@@ -19,7 +19,7 @@ let rerenderEntireTree = (state) => {
     );
 }
 
-store.subscribe(rerenderEntireTree);
+store.subscribe(()=>rerenderEntireTree(store.getState()));
 rerenderEntireTree(store.getState());
 
 reportWebVitals();

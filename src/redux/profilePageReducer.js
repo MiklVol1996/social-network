@@ -1,7 +1,12 @@
 const ADD_POST = 'ADD-POST';
 const UPDATE_POST_TEXT_VALUE = 'UPDATE-POST-TEXT-VALUE';
 
-const profilePageReducer = (state, action) => {
+let initialValue = {
+    posts: [{ id: 1, message: 'Come to the dark side...', likesCount: '5' },],
+    postTextValue: '',
+};
+
+const profilePageReducer = (state = initialValue, action) => {
 
     switch(action.type){
         case ADD_POST: {
