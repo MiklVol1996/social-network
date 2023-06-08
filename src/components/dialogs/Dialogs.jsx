@@ -2,23 +2,19 @@ import React from 'react';
 import classes from './dialogs.module.css';
 import Dialog from './dialog/Dialog.jsx';
 import Message from './message/Message';
-import { addMessageAC, updateMessageValueAC } from '../../redux/dialogsPageReducer';
 
-
-const Dialogs = ({ state, dispatch }) => {
+const Dialogs = ({ state, addMessage, updateMessageValue }) => {
 
   let dialogs = state.dialogs.map(dialog => <Dialog id={dialog.id} name={dialog.name} />)
   let messages = state.messages.map(message => <Message id={message.id} message={message.message} />)
 
-  let textArM = React.createRef();
-
-  function onUpdateMessageText(){
-    let text = textArM.current.value;
-    dispatch(updateMessageValueAC(text));
+  function onUpdateMessageText(e) {
+    let text = e.target.value;
+    updateMessageValue(text);
   }
 
-  function addMessage(){
-    dispatch(addMessageAC());
+  function onAddMessage() {
+    addMessage();
   }
 
   return (
@@ -32,14 +28,15 @@ const Dialogs = ({ state, dispatch }) => {
         </div>
         <div>
           <textarea value={state.newMessageValue} onChange={onUpdateMessageText}
-          placeholder='Enter you message' ref={textArM}></textarea>
+            placeholder='Enter you message'></textarea>
         </div>
         <div>
-          <button onClick={addMessage}>Send message</button>
+          <button onClick={onAddMessage}>Send message</button>
         </div>
 
       </div>
     </div>
   )
 }
+
 export default Dialogs;

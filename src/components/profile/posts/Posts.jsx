@@ -1,30 +1,27 @@
 import React from 'react';
 import Post from './post/Post';
 import classes from './posts.module.css';
-import { addPostAC, updatePostTextValueAC } from '../../../redux/profilePageReducer';
 
-const Posts = ({ state, dispatch }) => {
-debugger
-    let posts = state.posts.map(post => <Post message={post.message} 
+const Posts = ({ state, addPost, updatePostTextValue }) => {
+
+    let posts = state.posts.map(post => <Post message={post.message}
         likesCount={post.likesCount} />)
 
-    let textarea = React.createRef();
-
-    function onPostTextUpdate(){
-        let value = textarea.current.value;
-        dispatch(updatePostTextValueAC(value));
+    function onPostTextUpdate(e) {
+        let value = e.target.value;
+        updatePostTextValue(value);
     }
 
-    function addPost(){
-        dispatch(addPostAC());
+    function onAddPost() {
+        addPost();
     }
 
     return (
         <div>
             <textarea onChange={onPostTextUpdate} value={state.postTextValue}
-                placeholder='Enter your post...' ref={textarea}></textarea>
+                placeholder='Enter your post...'></textarea>
             <div>
-                <button onClick={addPost}>Add post</button>
+                <button onClick={onAddPost}>Add post</button>
             </div>
             <div className={classes.title}>
                 My Posts
