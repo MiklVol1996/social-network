@@ -3,7 +3,7 @@ import Post from './post/Post';
 import classes from './posts.module.css';
 
 const Posts = ({ state, addPost, updatePostTextValue }) => {
-
+debugger
     let posts = state.posts.map(post => <Post message={post.message}
         likesCount={post.likesCount} />)
 
