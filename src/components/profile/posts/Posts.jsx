@@ -1,9 +1,10 @@
 import React from 'react';
+import Button from '../../button/Button';
 import Post from './post/Post';
 import classes from './posts.module.css';
 
 const Posts = ({ state, addPost, updatePostTextValue }) => {
-debugger
+
     let posts = state.posts.map(post => <Post message={post.message}
         likesCount={post.likesCount} />)
 
@@ -20,9 +21,7 @@ debugger
         <div>
             <textarea onChange={onPostTextUpdate} value={state.postTextValue}
                 placeholder='Enter your post...'></textarea>
-            <div>
-                <button onClick={onAddPost}>Add post</button>
-            </div>
+                <Button onClick={onAddPost}>Add post</Button>
             <div className={classes.title}>
                 My Posts
             </div>

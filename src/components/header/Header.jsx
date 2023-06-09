@@ -22,7 +22,7 @@ const Header = () => {
           <Route path='/profile' element={<img src={green}/>}/>
           <Route path='/music' element={<img src={blue}/>}/>
           <Route path='/news' element={<img src={purple}/>}/>
-          <Route path='/settings' element={<img src={yellow}/>}/>
+          <Route path='/users' element={<img src={yellow}/>}/>
         </Routes>
        
       </div>

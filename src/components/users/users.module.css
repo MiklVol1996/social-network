@@ -1,0 +1,18 @@
+.photo img{
+    width: 90px;
+    height: 50px;
+}
+
+.userWrap{
+    margin-bottom: 30px;
+    font-size: 19px;
+}
+
+.title{
+    margin-bottom: 30px;
+    font-size: 28px;
+}
+
+.mainWrap{
+    padding: 20px;
+}

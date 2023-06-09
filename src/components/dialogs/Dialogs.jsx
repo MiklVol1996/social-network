@@ -2,6 +2,7 @@ import React from 'react';
 import classes from './dialogs.module.css';
 import Dialog from './dialog/Dialog.jsx';
 import Message from './message/Message';
+import Button from '../button/Button';
 
 const Dialogs = ({ state, addMessage, updateMessageValue }) => {
 
@@ -30,10 +31,7 @@ const Dialogs = ({ state, addMessage, updateMessageValue }) => {
           <textarea value={state.newMessageValue} onChange={onUpdateMessageText}
             placeholder='Enter you message'></textarea>
         </div>
-        <div>
-          <button onClick={onAddMessage}>Send message</button>
-        </div>
-
+        <Button onClick={onAddMessage}>Send</Button>
       </div>
     </div>
   )

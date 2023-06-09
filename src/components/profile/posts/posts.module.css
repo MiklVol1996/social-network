@@ -1,7 +1,8 @@
 textarea{
-    background-color: #d4d4d4;
+    background-color: #c4c4c4;
     width: 250px;
     height: 50px;
+    margin-bottom: 15px;
 }
 
 .title{

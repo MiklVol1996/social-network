@@ -39,8 +39,8 @@ const Nav = () => {
            </NavLink>
       </div>
       <div className={classes['nav-item']}>
-          <NavLink to='/settings' className={getClassName('Yellow')}>
-            <div>Settings</div>
+          <NavLink to='/users' className={getClassName('Yellow')}>
+            <div>Users</div>
             <div className={classes.innerYellow}></div>
            </NavLink>
       </div>

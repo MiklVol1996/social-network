@@ -1,0 +1,11 @@
+.buttonWrap button{
+    width: 100px;
+    height: 25px;
+    border-radius: 30px;
+    background-color: #a3a3a3;
+    border: 1px solid rgb(181, 181, 181);
+}
+
+.buttonWrap button:hover{
+    background-color: #7a7a7a;
+}
