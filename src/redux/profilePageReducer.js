@@ -28,7 +28,7 @@ const profilePageReducer = (state = initialValue, action) => {
     }
 }
 
-export const addPostAC = () => ({type: ADD_POST});
-export const updatePostTextValueAC = (text) => ({type: UPDATE_POST_TEXT_VALUE, value: text});
+export const addPost = () => ({type: ADD_POST});
+export const updatePostTextValue = (text) => ({type: UPDATE_POST_TEXT_VALUE, value: text});
 
 export default profilePageReducer;

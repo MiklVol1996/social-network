@@ -22,11 +22,16 @@
 
 .pages{
     color: white;
-    width: 500px;
+    width: 600px;
     overflow: hidden;
     margin-bottom: 20px;
     height: 20px;
     font-size: 18px;
+    display: flex;
+}
+
+.pages span{
+    margin: 0 5px;
 }
 
 .usual:hover{
@@ -41,4 +46,22 @@
 
 .active:hover{
     cursor: pointer;
+}
+
+.back{
+    margin-right: 10px;
+}
+
+.ahead{
+    margin-left: 10px;
+}
+
+.back:hover{
+    cursor: pointer;
+    color: rgb(1, 217, 255);
+}
+
+.ahead:hover{
+    cursor: pointer;
+    color: rgb(1, 217, 255);
 }
