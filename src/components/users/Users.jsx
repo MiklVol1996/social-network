@@ -1,15 +1,16 @@
 import React from 'react';
 import Button from '../button/Button';
 import classes from './users.module.css';
+import defaultAva from '../../images/defaultAva.jpg';
 
-let Users = ({ users, followUnfollow, setUsers }) => {
 
-    if (!users.length) {
-        setUsers([
-            { id: 1, name: 'misha', age: 18, followed: true },
-            { id: 2, name: 'nika', age: 23, followed: false },
-            { id: 3, name: 'pasha', age: 19, followed: true },
-        ]);
+const Users = ({currentPage, users, onPageClick, followUnfollow}) => {
+
+    let pages = [];
+    let i = currentPage - 5 <= 0 ? 1 : currentPage - 5;
+    let max = i + 10;
+    for (; i <= max; i++) {
+        pages.push(`${i} `);
     }
 
     return (
@@ -17,17 +18,27 @@ let Users = ({ users, followUnfollow, setUsers }) => {
             <div className={classes.title}>
                 Users
             </div>
+            <div className={classes.pages}>
+                {pages.map(p => {
+                    return (
+                        <span className={+p === currentPage ? classes.active : classes.usual}
+                            onClick={() => onPageClick(+p)}>{p}</span>
+                    )
+                })}
+            </div>
             {users.map(user => {
                 return (
                     <div className={classes.userWrap}>
                         <div className={classes.photo}>
-                            <img src='https://wallpapercave.com/wp/wp7575420.jpg' />
+                            <img src={user.photos.small
+                                ? user.photos.small
+                                : defaultAva} />
                         </div>
                         <div>
                             {`${user.name} age : ${user.age}`}
                         </div>
                         <div>
-                            <Button onClick={() => {followUnfollow(user.id)}}>
+                            <Button onClick={() => {followUnfollow(user.id) }}>
                                 {user.followed ? 'unfollowed' : 'followed'}
                             </Button>
                         </div>
@@ -35,7 +46,6 @@ let Users = ({ users, followUnfollow, setUsers }) => {
                 )
             })}
         </div>
-
     )
 }
 export default Users;

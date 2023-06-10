@@ -4,15 +4,41 @@
 }
 
 .userWrap{
+    width: 400px;
     margin-bottom: 30px;
     font-size: 19px;
+    border-bottom: 1px solid #414141;
+    padding: 5px;
 }
 
 .title{
-    margin-bottom: 30px;
+    margin-bottom: 15px;
     font-size: 28px;
 }
 
 .mainWrap{
     padding: 20px;
+}
+
+.pages{
+    color: white;
+    width: 500px;
+    overflow: hidden;
+    margin-bottom: 20px;
+    height: 20px;
+    font-size: 18px;
+}
+
+.usual:hover{
+    cursor: default;
+    color: rgb(121, 121, 121);
+    cursor: pointer;
+}
+
+.active{
+    color: rgb(1, 217, 255);
+}
+
+.active:hover{
+    cursor: pointer;
 }
