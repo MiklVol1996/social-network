@@ -2,7 +2,7 @@ import React from 'react';
 import loading from '../../images/preloader.gif';
 import classes from './preloader.module.css';
 
-let Preloader = () => {
+const Preloader = () => {
   return (
       <div className={classes.wrap}>
         <img src={loading}/>
@@ -10,3 +10,4 @@ let Preloader = () => {
   )
 }
 export default Preloader;
+

@@ -3,6 +3,7 @@ import Button from '../button/Button';
 import classes from './users.module.css';
 import defaultAva from '../../images/defaultAva.jpg';
 import Preloader from '../preloader/Preloader';
+import { NavLink } from 'react-router-dom';
 
 const Users = ({ currentPage, users, onPageClick, followUnfollow,
     numOfPages, isFetching }) => {
@@ -62,9 +63,11 @@ const Users = ({ currentPage, users, onPageClick, followUnfollow,
                             return (
                                 <div className={classes.userWrap}>
                                     <div className={classes.photo}>
-                                        <img src={user.photos.small
-                                            ? user.photos.small
-                                            : defaultAva} />
+                                        <NavLink to={'/profile/' + user.id}>
+                                            <img src={user.photos.small
+                                                ? user.photos.small
+                                                : defaultAva} />
+                                        </NavLink>
                                     </div>
                                     <div>
                                         {`${user.name} age : ${user.age}`}
@@ -79,7 +82,7 @@ const Users = ({ currentPage, users, onPageClick, followUnfollow,
                         })}
                     </div>
             }
-        </div>
+        </div >
 
 
     )
