@@ -1,12 +1,11 @@
 import { connect } from "react-redux";
-import { setProfile } from "../../redux/profilePageReducer";
+import { getProfile } from "../../redux/profilePageReducer";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Profile from "./Pfofile";
-import { api } from "../../api/api";
 
 
-const ProfileContainer = ({profile, setProfile}) => {
+const ProfileContainer = ({profile, getProfile}) => {
 
     let {userId} = useParams();
 
@@ -14,17 +13,12 @@ const ProfileContainer = ({profile, setProfile}) => {
         userId = '2';
     }
     useEffect(() => {
-        setProfile(null);
-        api.getProfile(userId)
-        .then(data => {
-            setProfile(data);
-        })
+        getProfile(userId);
     }, [userId])
 
     return(
         <Profile profile={profile}/>
     )
-
 }
 
 const mapStateToProps = (state) => {
@@ -33,6 +27,6 @@ const mapStateToProps = (state) => {
     }
 }
 
-export default connect(mapStateToProps, {setProfile})(ProfileContainer);
+export default connect(mapStateToProps, {getProfile})(ProfileContainer);
 
 

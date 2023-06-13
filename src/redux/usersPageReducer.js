@@ -1,3 +1,5 @@
+import { api } from "../api/api";
+
 const FOLLOW_UNFOLLOW = 'FOLLOW-UNFOLLOW';
 const SET_USERS = 'SET-USERS';
 const SET_NUM_OF_PAGES = 'SET-NUM-OF-PAGES';
@@ -93,3 +95,45 @@ export const setTotalCount = (count) => ({type: SET_TOTAL_COUNT, count: count});
 export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, isFetching: isFetching});
 export const addFolowProg = (id) => ({type: ADD_TO_FOLLOWING_IN_PROGRESS, id: id});
 export const removeFolowProg = (id) => ({type: REMOVE_FROM_FOLLOWING_IN_PROGRESS, id: id});
+
+export const getFollowUnfollow = (isFollowed, id) => (dispatch) => {
+    if (isFollowed) {
+        dispatch(addFolowProg(id));
+        api.removeFriend(id)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(followUnfollow(id));
+                    dispatch(removeFolowProg(id));
+                }
+            });
+    } else {
+        dispatch(addFolowProg(id));
+        api.addFriend(id)
+            .then(data => {
+                if (data.resultCode === 0) {
+                    dispatch(followUnfollow(id));
+                    dispatch(removeFolowProg(id));
+                }
+            });
+    }
+}
+export const getUsersFirstTime = (currentPage, pageSize) => (dispatch) => {
+    dispatch(setIsFetching(true));
+        api.getUsers(currentPage, pageSize)
+            .then(data => {
+                setTimeout(() => {
+                    dispatch(setIsFetching(false));
+                    let numOfPages = Math.ceil(data.totalCount / pageSize);
+                    dispatch(setNumOfPages(numOfPages));
+                    dispatch(setUsers(data.items));
+                    dispatch(setTotalCount(data.totalCount));
+                }, 1700);
+            });
+}
+export const getUsers = (p, pageSize) => (dispatch) => {
+    api.getUsers(p, pageSize)
+    .then(data => {
+        dispatch(setUsers(data.items));
+        dispatch(setCurrentPage(p));
+    });
+}

@@ -4,10 +4,10 @@ import classes from './users.module.css';
 import defaultAva from '../../images/defaultAva.jpg';
 import Preloader from '../preloader/Preloader';
 import { NavLink } from 'react-router-dom';
-import { api } from '../../api/api';
 
-const Users = ({ currentPage, users, onPageClick, followUnfollow,
-    numOfPages, isFetching, addFolowProg, removeFolowProg, folowInProgAr }) => {
+const Users = ({ currentPage, users, numOfPages, 
+    isFetching, folowInProgAr, getFollowUnfollow,
+    getUsers, pageSize }) => {
 
     let pages = [];
     let i = currentPage - 5 <= 0 ? 1 : currentPage - 5;
@@ -23,40 +23,18 @@ const Users = ({ currentPage, users, onPageClick, followUnfollow,
         switch (str) {
             case '-': {
                 if (currentPage !== 1) {
-                    onPageClick(currentPage - 1);
+                    getUsers(currentPage - 1, pageSize);
                 }
                 break;
             }
             case '+': {
                 if (currentPage !== numOfPages) {
-                    onPageClick(currentPage + 1);
+                    getUsers(currentPage + 1, pageSize);
                 }
                 break;
             }
         }
 
-    }
-
-    function onFollowClick(isFollowed, id) {
-        if (isFollowed) {
-            addFolowProg(id);
-            api.removeFriend(id)
-                .then(data => {
-                    if (data.resultCode === 0) {
-                        followUnfollow(id);
-                        removeFolowProg(id);
-                    }
-                });
-        } else {
-            addFolowProg(id);
-            api.addFriend(id)
-                .then(data => {
-                    if (data.resultCode === 0) {
-                        followUnfollow(id);
-                        removeFolowProg(id);
-                    }
-                });
-        }
     }
 
     return (
@@ -75,7 +53,7 @@ const Users = ({ currentPage, users, onPageClick, followUnfollow,
                             {pages.map(p => {
                                 return (
                                     <span className={+p === currentPage ? classes.active : classes.usual}
-                                        onClick={() => onPageClick(+p)}>{p}</span>
+                                        onClick={() => getUsers(+p, pageSize)}>{p}</span>
                                 )
                             })}
                             <div className={classes.ahead} onClick={() => swithPage('+')}>
@@ -103,7 +81,7 @@ const Users = ({ currentPage, users, onPageClick, followUnfollow,
 
                                     <div>
                                         <Button disabled={folowInProgAr.some(id => id === user.id)} 
-                                        onClick={() => { onFollowClick(user.followed, user.id) }}>
+                                        onClick={() => { getFollowUnfollow(user.followed, user.id) }}>
                                             {user.followed ? 'unfollowed' : 'followed'}
                                         </Button>
                                     </div>
