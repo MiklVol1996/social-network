@@ -4,6 +4,8 @@ const SET_NUM_OF_PAGES = 'SET-NUM-OF-PAGES';
 const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
 const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
 const SET_IS_FETCHING = 'SET-IS-FETCHING';
+const ADD_TO_FOLLOWING_IN_PROGRESS = 'ADD-TO-FOLLOWING-IN-PROGRESS';
+const REMOVE_FROM_FOLLOWING_IN_PROGRESS = 'REMOVE-FROM-FOLLOWING-IN-PROGRESS';
 
 let initialState = {
     users: [],
@@ -12,6 +14,7 @@ let initialState = {
     totalCount: 0,
     numOfPages: 0,
     isFetching: false,
+    followingInProgress: [],
 
 }
 
@@ -58,6 +61,22 @@ const usersPageReducer = (state = initialState, action) => {
                 isFetching: action.isFetching,
             }
         }
+        case ADD_TO_FOLLOWING_IN_PROGRESS: {
+            return{
+                ...state,
+                followingInProgress: [...state.followingInProgress, action.id],
+            }
+        }
+        case REMOVE_FROM_FOLLOWING_IN_PROGRESS: {
+            return{
+                ...state,
+                followingInProgress: state.followingInProgress.filter(id => {
+                    if(id !== action.id){
+                        return id;
+                    }
+                })
+            }
+        }
         default: {
             return state;
         }
@@ -72,3 +91,5 @@ export const setNumOfPages = (pages) => ({type: SET_NUM_OF_PAGES, pages: pages})
 export const setCurrentPage = (page) => ({type: SET_CURRENT_PAGE, page: page});
 export const setTotalCount = (count) => ({type: SET_TOTAL_COUNT, count: count});
 export const setIsFetching = (isFetching) => ({type: SET_IS_FETCHING, isFetching: isFetching});
+export const addFolowProg = (id) => ({type: ADD_TO_FOLLOWING_IN_PROGRESS, id: id});
+export const removeFolowProg = (id) => ({type: REMOVE_FROM_FOLLOWING_IN_PROGRESS, id: id});

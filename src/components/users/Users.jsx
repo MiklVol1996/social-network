@@ -4,9 +4,10 @@ import classes from './users.module.css';
 import defaultAva from '../../images/defaultAva.jpg';
 import Preloader from '../preloader/Preloader';
 import { NavLink } from 'react-router-dom';
+import { api } from '../../api/api';
 
 const Users = ({ currentPage, users, onPageClick, followUnfollow,
-    numOfPages, isFetching }) => {
+    numOfPages, isFetching, addFolowProg, removeFolowProg, folowInProgAr }) => {
 
     let pages = [];
     let i = currentPage - 5 <= 0 ? 1 : currentPage - 5;
@@ -34,6 +35,28 @@ const Users = ({ currentPage, users, onPageClick, followUnfollow,
             }
         }
 
+    }
+
+    function onFollowClick(isFollowed, id) {
+        if (isFollowed) {
+            addFolowProg(id);
+            api.removeFriend(id)
+                .then(data => {
+                    if (data.resultCode === 0) {
+                        followUnfollow(id);
+                        removeFolowProg(id);
+                    }
+                });
+        } else {
+            addFolowProg(id);
+            api.addFriend(id)
+                .then(data => {
+                    if (data.resultCode === 0) {
+                        followUnfollow(id);
+                        removeFolowProg(id);
+                    }
+                });
+        }
     }
 
     return (
@@ -72,8 +95,15 @@ const Users = ({ currentPage, users, onPageClick, followUnfollow,
                                     <div>
                                         {`${user.name} age : ${user.age}`}
                                     </div>
+                                    {user.followed
+                                        ? <div className={classes.isFriend}>
+                                            you are friends
+                                        </div>
+                                        : <></>}
+
                                     <div>
-                                        <Button onClick={() => { followUnfollow(user.id) }}>
+                                        <Button disabled={folowInProgAr.some(id => id === user.id)} 
+                                        onClick={() => { onFollowClick(user.followed, user.id) }}>
                                             {user.followed ? 'unfollowed' : 'followed'}
                                         </Button>
                                     </div>

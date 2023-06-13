@@ -2,8 +2,8 @@
     grid-area: h;
     display: grid;
     grid-template-rows: 65px;
-    grid-template-columns: 2fr 10fr;
-    grid-template-areas: "l s";
+    grid-template-columns: 2fr 10fr 1fr;
+    grid-template-areas: "l s log";
 }
 
 .header img{
@@ -22,4 +22,26 @@
 
 .label img{
     width: 80%;
+}
+
+.login{
+    grid-area: log;
+    color: aliceblue;
+    display: flex;
+    justify-content: end;
+    padding-top: 10px;
+    font-size: 17px;
+    text-decoration: none;
+}
+
+.login span{
+    height: 15px;
+}
+
+.login span:hover{
+    color: rgb(255, 234, 0);
+}
+
+.loginOk{
+    color: aliceblue;
 }
