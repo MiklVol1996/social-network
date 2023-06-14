@@ -43,6 +43,7 @@ export const updatePostTextValue = (text) => ({type: UPDATE_POST_TEXT_VALUE, val
 export const setProfile = (profile) => ({type: SET_PROFILE, profile: profile});
 
 export const getProfile = (userId) => (dispatch) => {
+    dispatch(setProfile(null));
     api.getProfile(userId)
     .then(data => {
         dispatch(setProfile(data));
