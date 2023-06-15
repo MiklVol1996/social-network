@@ -8,8 +8,7 @@ import purple from '../../images/05.png'
 import { NavLink, Route, Routes } from 'react-router-dom';
 import starWars from '../../images/starWars.jpg';
 
-const Header = ({ isAuth, login }) => {
-  
+const Header = ({ isAuth, login, logout }) => {
   return (
     <header className={classes.header}>
       <div className={classes.label}>
@@ -29,14 +28,17 @@ const Header = ({ isAuth, login }) => {
       {
         isAuth
           ? <div className={classes.loginOk}>
-            {login}
+            <div>
+              {login}
+            </div>
+            <div className={classes.logout} onClick={logout}>
+              Logout
+            </div>
           </div>
           : <NavLink className={classes.login} to='/login'>
             <span>Login</span>
           </NavLink>
       }
-
-
     </header>
   )
 }

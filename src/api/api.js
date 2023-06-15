@@ -47,6 +47,14 @@ export const api = {
     updateStatus(status){
         return instance.put('profile/status', {status: status})
         .then(response => response.data);
-    }
+    },
+    login(data){
+        return instance.post('auth/login', data)
+        .then(response => response.data);
+    },
+    logout(){
+        return instance.delete('auth/login')
+        .then(response => response.data);
+    },
 }
 

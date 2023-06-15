@@ -1,5 +1,5 @@
 import React from 'react';
-import Button from '../button/Button';
+import Button from '../common/button/Button';
 import classes from './users.module.css';
 import defaultAva from '../../images/defaultAva.jpg';
 import Preloader from '../common/preloader/Preloader';

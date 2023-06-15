@@ -5,3 +5,16 @@
 .password{
     margin-bottom: 15px;
 }
+
+.password input,
+.login input{
+    height: 20px;
+    width: 200px;
+}
+
+.button button{
+    margin-top: 10px;
+    height: 25px;
+    width: 70px;
+    font-size: 16px;
+}

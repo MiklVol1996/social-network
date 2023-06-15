@@ -28,7 +28,7 @@ class Status extends React.Component {
 
     onBlur() {
         this.switchEditMode();
-        if(this.state.status  !== this.props.status){
+        if (this.state.status !== this.props.status) {
             this.props.sendStatusToServer(this.state.status);
         }
     }
@@ -41,9 +41,13 @@ class Status extends React.Component {
         }
     }
 
+    isMyID = () => {
+        return this.props.id === '29133';
+    }
+
     render() {
         return (
-            <div>
+            <div className={classes.statusWrap}>
                 {
                     this.state.editMode
                         ? <div>
@@ -52,13 +56,13 @@ class Status extends React.Component {
                                 autoFocus={true}
                                 onBlur={this.onBlur.bind(this)} />
                         </div>
-                        : <div className={classes.span}>
-                            <span onDoubleClick={
-                                this.props.id === '29133'
+                        : <div className={this.isMyID() ? classes.span : ''}
+                            onDoubleClick={
+                                this.isMyID()
                                     ? this.switchEditMode.bind(this)
                                     : () => ({})
-                            }
-                            >{this.props.status || '-----'}</span>
+                            }>
+                            <span>{this.props.status || '-----'}</span>
                         </div>
                 }
             </div>

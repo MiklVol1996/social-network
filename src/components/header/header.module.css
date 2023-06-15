@@ -44,4 +44,12 @@
 
 .loginOk{
     color: aliceblue;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.logout:hover{
+    color: rgb(255, 234, 0);
+    cursor: pointer;
 }
