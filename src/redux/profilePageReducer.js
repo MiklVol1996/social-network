@@ -1,13 +1,11 @@
 import { api } from "../api/api";
 
 const ADD_POST = 'ADD-POST';
-const UPDATE_POST_TEXT_VALUE = 'UPDATE-POST-TEXT-VALUE';
 const SET_PROFILE = 'SET-PROFILE';
 const SET_STATUS = 'SET-STATUS';
 
 let initialValue = {
     posts: [{ id: 1, message: 'Come to the dark side...', likesCount: '5' },],
-    postTextValue: '',
     profile: null,
     status: null,
 };
@@ -18,14 +16,7 @@ const profilePageReducer = (state = initialValue, action) => {
         case ADD_POST: {
             return {
                 ...state,
-                posts: [...state.posts, {id: 2, message: state.postTextValue, likesCount: '0'}],
-                postTextValue: '',
-            }
-        }
-        case UPDATE_POST_TEXT_VALUE: {
-            return {
-                ...state,
-                postTextValue: action.value,
+                posts: [...state.posts, {id: 2, message: action.text, likesCount: '0'}],
             }
         }
         case SET_PROFILE: {
@@ -46,8 +37,7 @@ const profilePageReducer = (state = initialValue, action) => {
     }
 }
 
-export const addPost = () => ({type: ADD_POST});
-export const updatePostTextValue = (text) => ({type: UPDATE_POST_TEXT_VALUE, value: text});
+export const addPost = (text) => ({type: ADD_POST, text: text});
 export const setProfile = (profile) => ({type: SET_PROFILE, profile: profile});
 export const setStatus = (status) => ({type: SET_STATUS, status: status});
 
@@ -74,7 +64,5 @@ export const sendStatusToServer = (status) => (dispatch) => {
        } 
     })
 }
-
-
 
 export default profilePageReducer;

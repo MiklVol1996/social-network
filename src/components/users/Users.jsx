@@ -50,9 +50,9 @@ const Users = ({ currentPage, users, numOfPages,
                             <div className={classes.back} onClick={() => swithPage('-')}>
                                 {'<-'}
                             </div>
-                            {pages.map(p => {
+                            {pages.map((p, i) => {
                                 return (
-                                    <span className={+p === currentPage ? classes.active : classes.usual}
+                                    <span key={i} className={+p === currentPage ? classes.active : classes.usual}
                                         onClick={() => getUsers(+p, pageSize)}>{p}</span>
                                 )
                             })}
@@ -60,9 +60,9 @@ const Users = ({ currentPage, users, numOfPages,
                                 {'->'}
                             </div>
                         </div>
-                        {users.map(user => {
+                        {users.map((user, i) => {
                             return (
-                                <div className={classes.userWrap}>
+                                <div className={classes.userWrap} key={i}>
                                     <div className={classes.photo}>
                                         <NavLink to={'/profile/' + user.id}>
                                             <img src={user.photos.small

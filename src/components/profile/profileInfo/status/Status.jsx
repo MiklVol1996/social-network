@@ -1,4 +1,5 @@
 import React from "react";
+import classes from './status.module.css';
 
 class Status extends React.Component {
 
@@ -51,7 +52,7 @@ class Status extends React.Component {
                                 autoFocus={true}
                                 onBlur={this.onBlur.bind(this)} />
                         </div>
-                        : <div >
+                        : <div className={classes.span}>
                             <span onDoubleClick={
                                 this.props.id === '29133'
                                     ? this.switchEditMode.bind(this)

@@ -1,5 +1,4 @@
 const ADD_MESSAGE = 'ADD-MESSAGE';
-const UPDATE_NEW_MESSAGE_VALUE = 'UPDATE-NEW-MESSAGE-VALUE';
 
 let initialValue = {
     dialogs: [{ id: 1, name: 'Obi Wan Kenobi' },
@@ -8,7 +7,6 @@ let initialValue = {
     messages: [{ id: 1, message: 'Where is Kwaigon??' },
     { id: 2, message: 'May the Force be with you!' },
     { id: 3, message: "I'm going to Tatuin, i need some money" },],
-    newMessageValue: '',
 };
 
 const dialogsPageReducer = (state = initialValue, action) => {
@@ -17,14 +15,7 @@ const dialogsPageReducer = (state = initialValue, action) => {
         case ADD_MESSAGE: {
             return {
                 ...state,
-                messages: [...state.messages, {id: 4, message: state.newMessageValue}],
-                newMessageValue: '',
-            }
-        }
-        case UPDATE_NEW_MESSAGE_VALUE: {
-            return {
-                ...state,
-                newMessageValue: action.value,
+                messages: [...state.messages, {id: 4, message: action.message}],
             }
         }
         default: {
@@ -33,7 +24,6 @@ const dialogsPageReducer = (state = initialValue, action) => {
     }
 }
 
-export const addMessage = () => ({type: ADD_MESSAGE});
-export const updateMessageValue = (text) => ({type: UPDATE_NEW_MESSAGE_VALUE, value: text});
+export const addMessage = (message) => ({type: ADD_MESSAGE, message: message});
 
 export default dialogsPageReducer;

@@ -1,30 +1,22 @@
 import React, { useMemo } from 'react';
-import Button from '../../button/Button';
 import Post from './post/Post';
 import classes from './posts.module.css';
+import NewPostForm from './NewPostForm';
 
-const Posts = ({ state, addPost, updatePostTextValue }) => {
+const Posts = ({ state, addPost }) => {
 
     let posts = useMemo(() => {
-        return state.posts.map(post => <Post message={post.message}
-            likesCount={post.likesCount} />)
+        return state.posts.map((post, i) => <Post message={post.message}
+            likesCount={post.likesCount} key={i}/>)
     }, [state.posts])
 
-
-    function onPostTextUpdate(e) {
-        let value = e.target.value;
-        updatePostTextValue(value);
-    }
-
-    function onAddPost() {
-        addPost();
+    function onAddPost(data) {
+        addPost(data.postText);
     }
 
     return (
         <div>
-            <textarea onChange={onPostTextUpdate} value={state.postTextValue}
-                placeholder='Enter your post...'></textarea>
-            <Button onClick={onAddPost}>Add post</Button>
+            <NewPostForm onSubmit={onAddPost}/>
             <div className={classes.title}>
                 My Posts
             </div>

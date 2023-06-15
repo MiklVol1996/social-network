@@ -2,7 +2,7 @@ import React from 'react';
 import Preloader from '../../preloader/Preloader';
 import classes from './profileInfo.module.css';
 import defaultAva from '../../../images/defaultAva.jpg';
-import Status from './Status';
+import Status from './status/Status';
 
 const ProfileInfo = ({ profile, sendStatusToServer, status, id }) => {
 

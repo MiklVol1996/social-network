@@ -2,25 +2,20 @@ import React, { useMemo } from 'react';
 import classes from './dialogs.module.css';
 import Dialog from './dialog/Dialog.jsx';
 import Message from './message/Message';
-import Button from '../button/Button';
+import AddMessageForm from './AddMessageForm';
 
-const Dialogs = ({ state, addMessage, updateMessageValue }) => {
+const Dialogs = ({ state, addMessage }) => {
 
   let dialogs  = useMemo(() => {
-    return state.dialogs.map(dialog => <Dialog id={dialog.id} name={dialog.name} />)
+    return state.dialogs.map((dialog, i) => <Dialog id={dialog.id} name={dialog.name} key={i}/>)
   }, [state.dialogs])
 
   let messages = useMemo(() => {
-    return state.messages.map(message => <Message id={message.id} message={message.message} />)
+    return state.messages.map((message, i) => <Message id={message.id} message={message.message} key={i}/>)
   }, [state.messages])
 
-  function onUpdateMessageText(e) {
-    let text = e.target.value;
-    updateMessageValue(text);
-  }
-
-  function onAddMessage() {
-    addMessage();
+  function onAddMessage(data) {
+    addMessage(data.messageText);
   }
 
   return (
@@ -32,11 +27,7 @@ const Dialogs = ({ state, addMessage, updateMessageValue }) => {
         <div>
           {messages}
         </div>
-        <div>
-          <textarea value={state.newMessageValue} onChange={onUpdateMessageText}
-            placeholder='Enter you message'></textarea>
-        </div>
-        <Button onClick={onAddMessage}>Send</Button>
+        <AddMessageForm onSubmit={onAddMessage}/>
       </div>
     </div>
   )
