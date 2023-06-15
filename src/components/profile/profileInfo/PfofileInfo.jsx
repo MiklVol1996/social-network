@@ -1,5 +1,5 @@
 import React from 'react';
-import Preloader from '../../preloader/Preloader';
+import Preloader from '../../common/preloader/Preloader';
 import classes from './profileInfo.module.css';
 import defaultAva from '../../../images/defaultAva.jpg';
 import Status from './status/Status';

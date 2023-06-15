@@ -2,7 +2,7 @@ import React from 'react';
 import Button from '../button/Button';
 import classes from './users.module.css';
 import defaultAva from '../../images/defaultAva.jpg';
-import Preloader from '../preloader/Preloader';
+import Preloader from '../common/preloader/Preloader';
 import { NavLink } from 'react-router-dom';
 
 const Users = ({ currentPage, users, numOfPages, 

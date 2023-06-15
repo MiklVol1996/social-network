@@ -1,6 +1,6 @@
 import React from 'react';
 import { reduxForm, Field } from 'redux-form';
-import Button from '../../button/Button';
+import Button from '../../common/button/Button';
 
 const NewPostForm = (props) => {
     return (

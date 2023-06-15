@@ -15,7 +15,7 @@ const Posts = ({ state, addPost }) => {
     }
 
     return (
-        <div>
+        <div className={classes.postsWrap}>
             <NewPostForm onSubmit={onAddPost}/>
             <div className={classes.title}>
                 My Posts
