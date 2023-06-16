@@ -1,7 +1,7 @@
 import { connect } from "react-redux";
 import { getProfile } from "../../redux/profilePageReducer";
 import { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams } from "react-router-dom";
 import Profile from "./Pfofile";
 import WithAuthRedirect from "../../hok/withAuthRedirect";
 import { compose } from "redux";
@@ -9,18 +9,22 @@ import { getStatus, sendStatusToServer } from "../../redux/profilePageReducer";
 
 
 const ProfileContainer = ({ profile, getProfile, getStatus,
-    sendStatusToServer, status }) => {
+    sendStatusToServer, status, autorizedID, isAuth }) => {
 
     let { userId } = useParams();
 
-    if (!userId) {
-        userId = '29133';
-    }
     useEffect(() => {
         getStatus(userId);
         getProfile(userId);
-
     }, [userId])
+
+    if (!isAuth) {
+        return <Navigate to='/login'/>
+    }else{
+        if(!userId){
+            userId = autorizedID;
+        }
+    }
 
     return (
         <Profile profile={profile} sendStatusToServer={sendStatusToServer}
@@ -32,6 +36,7 @@ const mapStateToProps = (state) => {
     return {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
+        autorizedID: state.auth.id,
     }
 }
 export default compose(

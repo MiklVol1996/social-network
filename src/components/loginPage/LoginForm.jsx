@@ -14,8 +14,15 @@ const LoginForm = (props) => {
             </div>
             <div className={classes.password}>
                 <Field name='password' component={Input} placeholder='Enter your password...'
-                    validate={required} type='password'/>
+                    validate={required} type='password' />
             </div>
+            {
+                props.error
+                    ? <div className={classes.error}>
+                        {props.error}
+                    </div>
+                    : ''
+            }
             <div>
                 <Field name='rememberMe' component='input' type='checkbox' /> Remember me
             </div>

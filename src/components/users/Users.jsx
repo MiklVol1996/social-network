@@ -91,8 +91,6 @@ const Users = ({ currentPage, users, numOfPages,
                     </div>
             }
         </div >
-
-
     )
 }
 export default Users;

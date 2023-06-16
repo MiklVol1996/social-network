@@ -42,7 +42,7 @@ class Status extends React.Component {
     }
 
     isMyID = () => {
-        return this.props.id === '29133';
+        return this.props.id === 29133;
     }
 
     render() {

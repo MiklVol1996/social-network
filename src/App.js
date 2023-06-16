@@ -7,22 +7,45 @@ import DialogsContainer from './components/dialogs/DialogsContainer';
 import UsersContainer from './components/users/UsersContainer';
 import HeaderContainer from './components/header/HeaderContainer';
 import Login from './components/loginPage/Login';
+import { connect } from 'react-redux';
+import { getInitialized } from './redux/app.reducer';
+import Preloader from './components/common/preloader/Preloader';
 
-const App = () => {
-  return (
-    <div className='app-wrapper'>
-      <HeaderContainer/>
-      <Nav/>
-      <div className='content_wrapper'>
-        <Routes>
-          <Route path='/profile/:userId?' element={<ProfileContainer/>} />
-          <Route path='/dialogs/*' element={<DialogsContainer/>} />
-          <Route path='/users' element={<UsersContainer/>}/>
-          <Route path='/login' element={<Login/>} />
-        </Routes>
+class App extends React.Component {
+
+  componentDidMount(){
+    this.props.getInitialized();
+  }
+
+  render() {
+
+    if(!this.props.isInitialized){
+      return(
+        <Preloader/>
+      )
+    }
+
+    return (
+      <div className='app-wrapper'>
+        <HeaderContainer />
+        <Nav />
+        <div className='content_wrapper'>
+          <Routes>
+            <Route path='/profile/:userId?' element={<ProfileContainer />} />
+            <Route path='/dialogs/*' element={<DialogsContainer />} />
+            <Route path='/users' element={<UsersContainer />} />
+            <Route path='/login' element={<Login />} />
+          </Routes>
+        </div>
       </div>
-    </div>
-  );
+    );
+  }
 }
 
-export default App;
+const mapStateToProps = (state) => {
+  return{
+    isInitialized: state.app.isInitialized,
+  }
+}
+
+export default connect(mapStateToProps, { getInitialized })(App);
