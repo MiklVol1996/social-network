@@ -1,73 +1,61 @@
 import React from "react";
+import { useEffect } from "react";
+import { useState } from "react";
 import classes from './status.module.css';
 
-class Status extends React.Component {
+const Status = (props) => {
 
-    state = {
-        editMode: false,
-        status: this.props.status,
-    }
+    let [editMode, setEditMode] = useState(false);
+    let [status, setStatus] = useState(props.status);
 
-    switchEditMode() {
-        if (this.state.editMode) {
-            this.setState({
-                editMode: false,
-            })
+    useEffect(() => {
+        setStatus(props.status);
+    }, [props.status]);
+
+    const switchEditMode = () => {
+        if (editMode) {
+            setEditMode(false);
             return;
         }
-        this.setState({
-            editMode: true,
-        })
+        setEditMode(true);
     }
 
-    onStatusChange(e) {
-        this.setState({
-            status: e.target.value,
-        })
+    const onStatusChange = (e) => {
+        setStatus(e.target.value);
     }
 
-    onBlur() {
-        this.switchEditMode();
-        if (this.state.status !== this.props.status) {
-            this.props.sendStatusToServer(this.state.status);
+    const onBlur = () => {
+        switchEditMode();
+        if (status !== props.status) {
+            props.sendStatusToServer(status);
         }
     }
 
-    componentDidUpdate() {
-        if (this.state.status === null) {
-            this.setState({
-                status: this.props.status,
-            })
-        }
+    const isMyID = () => {
+        return props.id === 29133;
     }
 
-    isMyID = () => {
-        return this.props.id === 29133;
-    }
-
-    render() {
-        return (
-            <div className={classes.statusWrap}>
-                {
-                    this.state.editMode
-                        ? <div>
-                            <input value={this.state.status}
-                                onChange={this.onStatusChange.bind(this)}
-                                autoFocus={true}
-                                onBlur={this.onBlur.bind(this)} />
-                        </div>
-                        : <div className={this.isMyID() ? classes.span : ''}
-                            onDoubleClick={
-                                this.isMyID()
-                                    ? this.switchEditMode.bind(this)
-                                    : () => ({})
-                            }>
-                            <span>{this.props.status || '-----'}</span>
-                        </div>
-                }
-            </div>
-        )
-    }
+    return (
+        <div className={classes.statusWrap}>
+            {
+                editMode
+                    ? <div>
+                        <input value={status}
+                            onChange={onStatusChange}
+                            autoFocus={true}
+                            onBlur={onBlur} />
+                    </div>
+                    : <div className={isMyID() ? classes.span : ''}
+                        onDoubleClick={
+                            isMyID()
+                                ? switchEditMode
+                                : () => ({})
+                        }>
+                        <span>{status || '-----'}</span>
+                    </div>
+            }
+        </div>
+    )
 }
 
 export default Status;

@@ -11,7 +11,7 @@ const appReducer = (state = initialState, action) => {
         case SET_INITIALIZED: {
             return {
                 ...state,
-                isInitialized: true,
+                isInitialized: action.isInitialized,
             }
         }
         default: {
@@ -20,12 +20,14 @@ const appReducer = (state = initialState, action) => {
     }
 }
 
-export const setInitialized = () => ({type: SET_INITIALIZED});
+export const setInitialized = (isInitialized) => ({type: SET_INITIALIZED, isInitialized: isInitialized});
 
 export const getInitialized = () => (dispatch) => {
     dispatch(authMe())
-    .then(() => {
-        dispatch(setInitialized());
+    .then((i) => {
+       if(!i){
+        dispatch(setInitialized(true));
+       }  
     })
 }
 

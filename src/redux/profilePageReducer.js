@@ -41,18 +41,12 @@ export const addPost = (text) => ({type: ADD_POST, text: text});
 export const setProfile = (profile) => ({type: SET_PROFILE, profile: profile});
 export const setStatus = (status) => ({type: SET_STATUS, status: status});
 
-export const getProfile = (userId) => (dispatch) => {
+export const getUserData = (userId) => (dispatch) => {
     dispatch(setProfile(null));
-    api.getProfile(userId)
-    .then(data => {
-        dispatch(setProfile(data));
-    })
-}
-
-export const getStatus = (id) => (dispatch) => {
-    api.getStatus(id)
-    .then(data => {
-        dispatch(setStatus(data)); 
+    Promise.all([api.getProfile(userId), api.getStatus(userId)])
+    .then(response => {
+        dispatch(setProfile(response[0]));
+        dispatch(setStatus(response[1])); 
     })
 }
 

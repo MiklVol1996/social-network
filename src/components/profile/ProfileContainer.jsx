@@ -1,30 +1,25 @@
 import { connect } from "react-redux";
-import { getProfile } from "../../redux/profilePageReducer";
 import { useEffect } from "react";
 import { Navigate, useParams } from "react-router-dom";
 import Profile from "./Pfofile";
-import WithAuthRedirect from "../../hok/withAuthRedirect";
-import { compose } from "redux";
-import { getStatus, sendStatusToServer } from "../../redux/profilePageReducer";
+import { getUserData, sendStatusToServer } from "../../redux/profilePageReducer";
 
 
-const ProfileContainer = ({ profile, getProfile, getStatus,
-    sendStatusToServer, status, autorizedID, isAuth }) => {
-
+const ProfileContainer = ({ profile, getUserData,
+    sendStatusToServer, status, autorizedID }) => {
+debugger
     let { userId } = useParams();
 
     useEffect(() => {
-        getStatus(userId);
-        getProfile(userId);
+        if (userId) {
+            getUserData(userId);
+        }
     }, [userId])
 
-    if (!isAuth) {
-        return <Navigate to='/login'/>
-    }else{
-        if(!userId){
-            userId = autorizedID;
-        }
+    if (!userId) {
+        userId = autorizedID;
     }
+
 
     return (
         <Profile profile={profile} sendStatusToServer={sendStatusToServer}
@@ -37,12 +32,10 @@ const mapStateToProps = (state) => {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
         autorizedID: state.auth.id,
+        isAuth: state.auth.isAuth,
     }
 }
-export default compose(
-    WithAuthRedirect,
-    connect(mapStateToProps, { getProfile, getStatus, sendStatusToServer })
-)(ProfileContainer);
+export default connect(mapStateToProps, { getUserData, sendStatusToServer })(ProfileContainer);
 
 
 

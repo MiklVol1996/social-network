@@ -9,19 +9,19 @@ import HeaderContainer from './components/header/HeaderContainer';
 import Login from './components/loginPage/Login';
 import { connect } from 'react-redux';
 import { getInitialized } from './redux/app.reducer';
-import Preloader from './components/common/preloader/Preloader';
 
 class App extends React.Component {
 
-  componentDidMount(){
+  componentDidMount() {
     this.props.getInitialized();
   }
 
   render() {
-
-    if(!this.props.isInitialized){
-      return(
-        <Preloader/>
+    if (!this.props.isInitialized) {
+      return (
+        <div className='logWrap'>
+          <Login />
+        </div>
       )
     }
 
@@ -43,9 +43,12 @@ class App extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return{
+  return {
     isInitialized: state.app.isInitialized,
   }
 }
 
 export default connect(mapStateToProps, { getInitialized })(App);
+
+
+

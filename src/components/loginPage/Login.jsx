@@ -12,9 +12,6 @@ const Login = ({isAuth, login}) => {
     login(data);
   }
 
-  if(isAuth){
-    return <Navigate to='/profile'/>
-  }
 
   return (
     <div className={classes.loginWrap}>
