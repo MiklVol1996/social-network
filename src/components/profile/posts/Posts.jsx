@@ -3,12 +3,12 @@ import Post from './post/Post';
 import classes from './posts.module.css';
 import NewPostForm from './NewPostForm';
 
-const Posts = ({ state, addPost }) => {
-
-    let posts = useMemo(() => {
-        return state.posts.map((post, i) => <Post message={post.message}
+const Posts = ({ posts, addPost }) => {
+   
+    let postsAr = useMemo(() => {
+        return posts.map((post, i) => <Post message={post.message}
             likesCount={post.likesCount} key={i}/>)
-    }, [state.posts])
+    }, [posts])
 
     function onAddPost(data) {
         addPost(data.postText);
@@ -20,7 +20,7 @@ const Posts = ({ state, addPost }) => {
             <div className={classes.title}>
                 My Posts
             </div>
-            {posts}
+            {postsAr}
         </div>
     )
 }

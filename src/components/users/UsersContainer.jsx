@@ -4,8 +4,10 @@ import Users from './Users';
 import { getFollowUnfollow } from "../../redux/usersPageReducer";
 import { getUsersFirstTime } from "../../redux/usersPageReducer";
 import { getUsers } from "../../redux/usersPageReducer";
-import { giveCurrentPage, giveFolowInProgAr, giveIsFetching, 
-    giveNumOfPages, givePageSize, giveUsers } from "../../redux/selectors";
+import {
+    giveCurrentPage, giveFolowInProgAr, giveIsFetching,
+    giveNumOfPages, givePageSize, giveUsers
+} from "../../redux/selectors";
 
 
 class UsersContainer extends React.Component {
@@ -15,13 +17,12 @@ class UsersContainer extends React.Component {
     }
 
     render() {
+        const data = this.props;
         return (
-            <Users currentPage={this.props.currentPage}
-                users={this.props.users} getUsers={this.props.getUsers}
-                numOfPages={this.props.numOfPages} isFetching={this.props.isFetching}
-                folowInProgAr={this.props.folowInProgAr}
-                getFollowUnfollow={this.props.getFollowUnfollow}
-                pageSize={this.props.pageSize}/>
+            <Users currentPage={data.currentPage} users={data.users}
+                getUsers={data.getUsers} numOfPages={data.numOfPages}
+                isFetching={data.isFetching} folowInProgAr={data.folowInProgAr}
+                getFolUnfol={data.getFollowUnfollow} pageSize={data.pageSize} />
         )
     }
 }

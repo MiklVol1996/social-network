@@ -3,15 +3,12 @@ import classes from './login.module.css';
 import LoginForm from './LoginForm';
 import { login } from '../../redux/authReducer';
 import { connect } from 'react-redux';
-import { Navigate } from 'react-router-dom';
 
-
-const Login = ({isAuth, login}) => {
+const Login = ({login}) => {
 
   const onSubmit = (data) => {
     login(data);
   }
-
 
   return (
     <div className={classes.loginWrap}>
@@ -23,10 +20,5 @@ const Login = ({isAuth, login}) => {
   )
 }
 
-const mapStateToProps = (state) => {
-  return {
-    isAuth: state.auth.isAuth,
-  }
-}
 
-export default connect(mapStateToProps, {login})(Login);
+export default connect(null, {login})(Login);

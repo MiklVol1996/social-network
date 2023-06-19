@@ -4,7 +4,7 @@ import PostsContainer from './posts/PostsContainer';
 import ProfileInfo from './profileInfo/PfofileInfo';
 
 const Profile = ({ profile, sendStatusToServer, status, id }) => {
-    
+   
     return (
         <div className={classes.content}>
             <div className={classes['main-content-block']}>

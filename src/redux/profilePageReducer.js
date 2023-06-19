@@ -12,11 +12,11 @@ let initialValue = {
 
 const profilePageReducer = (state = initialValue, action) => {
 
-    switch(action.type){
+    switch (action.type) {
         case ADD_POST: {
             return {
                 ...state,
-                posts: [...state.posts, {id: 2, message: action.text, likesCount: '0'}],
+                posts: [...state.posts, { id: 2, message: action.text, likesCount: '0' }],
             }
         }
         case SET_PROFILE: {
@@ -37,26 +37,22 @@ const profilePageReducer = (state = initialValue, action) => {
     }
 }
 
-export const addPost = (text) => ({type: ADD_POST, text: text});
-export const setProfile = (profile) => ({type: SET_PROFILE, profile: profile});
-export const setStatus = (status) => ({type: SET_STATUS, status: status});
+export const addPost = (text) => ({ type: ADD_POST, text: text });
+export const setProfile = (profile) => ({ type: SET_PROFILE, profile: profile });
+export const setStatus = (status) => ({ type: SET_STATUS, status: status });
 
-export const getUserData = (userId) => (dispatch) => {
+export const getUserData = (userId) => async (dispatch) => {
     dispatch(setProfile(null));
-    Promise.all([api.getProfile(userId), api.getStatus(userId)])
-    .then(response => {
-        dispatch(setProfile(response[0]));
-        dispatch(setStatus(response[1])); 
-    })
+    const response = await Promise.all([api.getProfile(userId), api.getStatus(userId)]);
+    dispatch(setProfile(response[0]));
+    dispatch(setStatus(response[1]));
 }
 
-export const sendStatusToServer = (status) => (dispatch) => {
-    api.updateStatus(status)
-    .then(data => {
-       if(data.resultCode === 0){
+export const sendStatusToServer = (status) => async (dispatch) => {
+    const data = await api.updateStatus(status);
+    if (data.resultCode === 0) {
         dispatch(setStatus(status));
-       } 
-    })
+    }
 }
 
 export default profilePageReducer;

@@ -10,51 +10,41 @@ let instance = axios.create({
 })
 
 export const api = {
-    authMe() {
-        return instance.get(`auth/me`)
-            .then(response => {
-                return response.data;
-            })
+    async authMe() {
+        const response = await instance.get(`auth/me`);
+        return response.data;
     },
-    getProfile(id){
-        return instance.get('profile/' + id)
-        .then(response => {
-            return response.data;
-        })
+    async getProfile(id) {
+        const response = await instance.get('profile/' + id);
+        return response.data;
     },
-    removeFriend(id){
-        return instance.delete('follow/' + id)
-        .then(response => {
-            return response.data;
-        })
+    async removeFriend(id) {
+        const response = await instance.delete('follow/' + id);
+        return response.data;
     },
-    addFriend(id){
-        return instance.post('follow/' + id)
-        .then(response => {
-            return response.data;
-        })
+    async addFriend(id) {
+        const response = await instance.post('follow/' + id);
+        return response.data;
     },
-    getUsers(currentPage, pageSize){
-        return instance.get(`users?page=${currentPage}&count=${pageSize}`)
-        .then(response => {
-            return response.data;
-        })
+    async getUsers(currentPage, pageSize) {
+        const response = await instance.get(`users?page=${currentPage}&count=${pageSize}`);
+        return response.data;
     },
-    getStatus(id){
-        return instance.get('profile/status/' + id)
-        .then(response => response.data);
+    async getStatus(id) {
+        const response = await instance.get('profile/status/' + id);
+        return response.data;
     },
-    updateStatus(status){
-        return instance.put('profile/status', {status: status})
-        .then(response => response.data);
+    async updateStatus(status) {
+        const response = await instance.put('profile/status', { status: status });
+        return response.data;
     },
-    login(data){
-        return instance.post('auth/login', data)
-        .then(response => response.data);
+    async login(data) {
+        const response = await instance.post('auth/login', data);
+        return response.data;
     },
-    logout(){
-        return instance.delete('auth/login')
-        .then(response => response.data);
+    async logout() {
+        const response = await instance.delete('auth/login');
+        return response.data;
     },
 }
 

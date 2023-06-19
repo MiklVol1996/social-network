@@ -22,7 +22,6 @@ const ProfileInfo = ({ profile, sendStatusToServer, status, id }) => {
                     : <Preloader />
             }
         </div>
-
     )
 }
 export default ProfileInfo;

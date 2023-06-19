@@ -17,6 +17,7 @@ class App extends React.Component {
   }
 
   render() {
+    
     if (!this.props.isInitialized) {
       return (
         <div className='logWrap'>
@@ -34,7 +35,6 @@ class App extends React.Component {
             <Route path='/profile/:userId?' element={<ProfileContainer />} />
             <Route path='/dialogs/*' element={<DialogsContainer />} />
             <Route path='/users' element={<UsersContainer />} />
-            <Route path='/login' element={<Login />} />
           </Routes>
         </div>
       </div>
@@ -45,10 +45,19 @@ class App extends React.Component {
 const mapStateToProps = (state) => {
   return {
     isInitialized: state.app.isInitialized,
+    isAuth: state.auth.isAuth,
   }
 }
 
 export default connect(mapStateToProps, { getInitialized })(App);
+
+
+
+
+
+
+
+
 
 
 
