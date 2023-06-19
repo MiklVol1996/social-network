@@ -46,5 +46,15 @@ export const api = {
         const response = await instance.delete('auth/login');
         return response.data;
     },
+    async updateAva(data){
+        const formData = new FormData();
+        formData.append('image', data);
+        const response = await instance.put('profile/photo', formData, {
+            headers: {
+                'Content-Type': 'multipart/form-data',
+            }
+        });
+        return response.data;
+    }
 }
 

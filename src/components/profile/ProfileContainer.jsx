@@ -3,10 +3,11 @@ import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Profile from "./Pfofile";
 import { getUserData, sendStatusToServer } from "../../redux/profilePageReducer";
+import { uploadNewPhoto } from "../../redux/profilePageReducer";
 
 
 const ProfileContainer = ({ profile, getUserData,
-    sendStatusToServer, status, autorizedID }) => {
+    sendStatusToServer, status, autorizedID, uploadNewPhoto }) => {
 
     let { userId } = useParams();
   
@@ -23,7 +24,8 @@ const ProfileContainer = ({ profile, getUserData,
   
     return (
         <Profile profile={profile} sendStatusToServer={sendStatusToServer}
-            status={status} id={userId} />
+            status={status} id={userId} uploadNewPhoto={uploadNewPhoto}
+            autorizedID={autorizedID}/>
     )
 }
 
@@ -35,7 +37,8 @@ const mapStateToProps = (state) => {
         isAuth: state.auth.isAuth,
     }
 }
-export default connect(mapStateToProps, { getUserData, sendStatusToServer })(ProfileContainer);
+export default connect(mapStateToProps, 
+    { getUserData, sendStatusToServer, uploadNewPhoto })(ProfileContainer);
 
 
 

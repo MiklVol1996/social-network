@@ -3,6 +3,7 @@ import { api } from "../api/api";
 const ADD_POST = 'ADD-POST';
 const SET_PROFILE = 'SET-PROFILE';
 const SET_STATUS = 'SET-STATUS';
+const SET_NEW_AVA = 'SET-NEW-AVA';
 
 let initialValue = {
     posts: [{ id: 1, message: 'Come to the dark side...', likesCount: '5' },],
@@ -31,6 +32,12 @@ const profilePageReducer = (state = initialValue, action) => {
                 status: action.status,
             }
         }
+        case SET_NEW_AVA: {
+            return {
+                ...state,
+                profile: {...state.profile, photos: action.photos},
+            }
+        }
         default: {
             return state;
         }
@@ -40,6 +47,7 @@ const profilePageReducer = (state = initialValue, action) => {
 export const addPost = (text) => ({ type: ADD_POST, text: text });
 export const setProfile = (profile) => ({ type: SET_PROFILE, profile: profile });
 export const setStatus = (status) => ({ type: SET_STATUS, status: status });
+export const setNewAva = (photos) => ({ type: SET_NEW_AVA, photos: photos });
 
 export const getUserData = (userId) => async (dispatch) => {
     dispatch(setProfile(null));
@@ -53,6 +61,14 @@ export const sendStatusToServer = (status) => async (dispatch) => {
     if (data.resultCode === 0) {
         dispatch(setStatus(status));
     }
+}
+
+export const uploadNewPhoto = (photo) => async(dispatch) => {
+    const response = await api.updateAva(photo[0]);
+    if (response.resultCode === 0) {
+        dispatch(setNewAva(response.data.photos));
+    }
+   
 }
 
 export default profilePageReducer;
