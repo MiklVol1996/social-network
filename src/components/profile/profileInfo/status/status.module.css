@@ -2,7 +2,10 @@
     cursor: pointer;
 }
 
-.statusWrap div:last-child{
-    width: 250px;
+.statusBody{
+    max-width: 300px;
+    max-height: 40px;
+    overflow-wrap: break-word;
+    
 }
    

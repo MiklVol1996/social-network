@@ -1,20 +1,23 @@
 import React from "react";
-import { reduxForm, Field } from "redux-form";
+import { reduxForm } from "redux-form";
 import classes from './loginForm.module.css';
 import { Input } from "../common/formControls/FormsControls";
 import { required } from "../../utils/validators";
+import { createField } from "../common/fieldCreator/createField";
 
+
+const elem = Input(true);
 
 const LoginForm = (props) => {
+
     return (
         <form onSubmit={props.handleSubmit}>
             <div className={classes.login}>
-                <Field name='email' component={Input} placeholder='Enter your login...'
-                    validate={required} />
+                {createField('email', elem, 'Enter your login...', [required])}
             </div>
             <div className={classes.password}>
-                <Field name='password' component={Input} placeholder='Enter your password...'
-                    validate={required} type='password' />
+                {createField('password', elem, 'Enter your password...', [required], 
+                'password')}
             </div>
             {
                 props.error
@@ -23,9 +26,7 @@ const LoginForm = (props) => {
                     </div>
                     : ''
             }
-            <div>
-                <Field name='rememberMe' component='input' type='checkbox' /> Remember me
-            </div>
+            {createField('rememberMe', 'input', '', [], 'checkbox', 'Remember me')}
             <div className={classes.button}>
                 <button>Login</button>
             </div>

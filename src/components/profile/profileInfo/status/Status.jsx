@@ -1,16 +1,11 @@
 import React from "react";
-import { useEffect } from "react";
 import { useState } from "react";
 import classes from './status.module.css';
+import { StatusFormRedux } from "./StatusForm";
 
 const Status = (props) => {
 
     let [editMode, setEditMode] = useState(false);
-    let [status, setStatus] = useState(props.status);
-
-    useEffect(() => {
-        setStatus(props.status);
-    }, [props.status]);
 
     const switchEditMode = () => {
         if (editMode) {
@@ -20,38 +15,25 @@ const Status = (props) => {
         setEditMode(true);
     }
 
-    const onStatusChange = (e) => {
-        setStatus(e.target.value);
-    }
-
-    const onBlur = () => {
+    const onStatusUpdate = (data) => {
         switchEditMode();
-        if (status !== props.status) {
-            props.sendStatusToServer(status);
-        }
-    }
-
-    const isMyID = () => {
-        return props.id === 29133;
+        props.sendStatusToServer(data);
     }
 
     return (
         <div className={classes.statusWrap}>
             {
                 editMode
-                    ? <div>
-                        <input value={status}
-                            onChange={onStatusChange}
-                            autoFocus={true}
-                            onBlur={onBlur} />
-                    </div>
-                    : <div className={isMyID() ? classes.span : ''}
+                    ? <StatusFormRedux onSubmit={onStatusUpdate}
+                        initialValues={{'statusBody': props.status}}
+                        onBlur={switchEditMode}/>
+                    : <div className={props.isOwner ? classes.span : ''}
                         onDoubleClick={
-                            isMyID()
+                            props.isOwner
                                 ? switchEditMode
                                 : () => ({})
                         }>
-                        <span>{status || '-----'}</span>
+                        <div className={classes.statusBody}>{props.status || '-----'}</div>
                     </div>
             }
         </div>

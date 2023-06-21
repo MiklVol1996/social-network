@@ -1,4 +1,6 @@
 import { api } from "../api/api";
+import { stopSubmit } from "redux-form";
+import { handleErrors } from "../utils/apiErrorsHandler";
 
 const ADD_POST = 'ADD-POST';
 const SET_PROFILE = 'SET-PROFILE';
@@ -35,7 +37,7 @@ const profilePageReducer = (state = initialValue, action) => {
         case SET_NEW_AVA: {
             return {
                 ...state,
-                profile: {...state.profile, photos: action.photos},
+                profile: { ...state.profile, photos: action.photos },
             }
         }
         default: {
@@ -57,18 +59,29 @@ export const getUserData = (userId) => async (dispatch) => {
 }
 
 export const sendStatusToServer = (status) => async (dispatch) => {
-    const data = await api.updateStatus(status);
+    const data = await api.updateStatus(status.statusBody);
     if (data.resultCode === 0) {
-        dispatch(setStatus(status));
+        dispatch(setStatus(status.statusBody));
     }
 }
 
-export const uploadNewPhoto = (photo) => async(dispatch) => {
+export const uploadNewPhoto = (photo) => async (dispatch) => {
     const response = await api.updateAva(photo[0]);
     if (response.resultCode === 0) {
         dispatch(setNewAva(response.data.photos));
     }
-   
+}
+
+export const updateProfileData = (data) => async (dispatch, getState) => {
+    const answer = await api.updatePforileData(data);
+    if (answer.resultCode === 0) {
+        const id = getState().auth.id;
+        const profile = await api.getProfile(id);
+        dispatch(setProfile(profile));
+    } else {
+        const errors = handleErrors(answer);
+        dispatch(stopSubmit('EditProfileDataForm', { ...errors }))
+    }
 }
 
 export default profilePageReducer;

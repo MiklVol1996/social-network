@@ -17,7 +17,7 @@ class App extends React.Component {
   }
 
   render() {
-    
+
     if (!this.props.isInitialized) {
       return (
         <div className='logWrap'>

@@ -1,0 +1,31 @@
+.contacts{
+    margin-left: 30px;
+    margin-top: 28px;
+}
+
+.about{
+    margin-left: 20px;
+    margin-top: 28px;
+}
+
+.aboutItem{
+    margin-bottom: 20px;
+    border-bottom: 1px solid #414141; 
+    overflow-wrap: break-word;
+    width: 220px;
+}
+
+.contactsTitle{
+    color: rgb(48, 236, 41);
+    margin-bottom: 10px; 
+}
+
+.right{
+    grid-area: r;
+    display: flex;
+}
+
+.contWrap{
+    border-bottom: 1px solid #414141;
+    margin-bottom: 10px;
+}

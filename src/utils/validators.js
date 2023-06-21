@@ -4,3 +4,10 @@ export const required = (value) => {
     }
     return 'field is required';
 }
+
+export const maxLength = (length) => (value) => {
+    if(value.length <= length){
+        return undefined
+    }
+    return `max length is ${length} symbols`;
+}

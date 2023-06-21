@@ -2,15 +2,16 @@ import { connect } from "react-redux";
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import Profile from "./Pfofile";
-import { getUserData, sendStatusToServer } from "../../redux/profilePageReducer";
-import { uploadNewPhoto } from "../../redux/profilePageReducer";
+import { getUserData, sendStatusToServer, 
+    uploadNewPhoto, updateProfileData } from "../../redux/profilePageReducer";
 
 
-const ProfileContainer = ({ profile, getUserData,
-    sendStatusToServer, status, autorizedID, uploadNewPhoto }) => {
+const ProfileContainer = ({ profile, getUserData, updateProfileData, sendStatusToServer, 
+    status, autorizedID, uploadNewPhoto }) => {
 
+    let isOwner = false;
     let { userId } = useParams();
-  
+
     useEffect(() => {
         if (userId) {
             getUserData(userId);
@@ -19,13 +20,13 @@ const ProfileContainer = ({ profile, getUserData,
 
     if (!userId) {
         userId = autorizedID;
+        isOwner = true;
     }
 
-  
     return (
         <Profile profile={profile} sendStatusToServer={sendStatusToServer}
-            status={status} id={userId} uploadNewPhoto={uploadNewPhoto}
-            autorizedID={autorizedID}/>
+            status={status} uploadNewPhoto={uploadNewPhoto} isOwner={isOwner}
+            updateProfileData={updateProfileData} />
     )
 }
 
@@ -34,11 +35,10 @@ const mapStateToProps = (state) => {
         profile: state.profilePage.profile,
         status: state.profilePage.status,
         autorizedID: state.auth.id,
-        isAuth: state.auth.isAuth,
     }
 }
-export default connect(mapStateToProps, 
-    { getUserData, sendStatusToServer, uploadNewPhoto })(ProfileContainer);
+export default connect(mapStateToProps,
+    { getUserData, sendStatusToServer, uploadNewPhoto, updateProfileData })(ProfileContainer);
 
 
 

@@ -1,7 +1,7 @@
 .header{
     grid-area: h;
     display: grid;
-    grid-template-rows: 65px;
+    grid-template-rows: 10vh;
     grid-template-columns: 2fr 10fr 1fr;
     grid-template-areas: "l s log";
 }

@@ -11,11 +11,16 @@
 
 .content_wrapper{
     grid-area: c;
-    height: 100vh;
+    height: 90vh;
+    overflow: scroll;
     color: aliceblue;
     border-left: 1px solid #414141;
     border-right: 1px solid #414141;
 }
+
+.content_wrapper::-webkit-scrollbar {
+    width: 0;
+  }
 
 .count{
     color: white;
@@ -25,6 +30,9 @@
     margin-left: 50vh;
     margin-top: 20vh;
 }
+
+
+
 
 
 

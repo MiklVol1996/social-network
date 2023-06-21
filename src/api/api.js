@@ -55,6 +55,10 @@ export const api = {
             }
         });
         return response.data;
+    },
+    async updatePforileData (data){
+    const response =  await instance.put('profile/', data);
+    return response.data;
     }
 }
 
