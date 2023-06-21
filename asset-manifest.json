@@ -1,0 +1,26 @@
+{
+  "files": {
+    "main.css": "/social-network-js/static/css/main.ed4dd6b7.css",
+    "main.js": "/social-network-js/static/js/main.784adad5.js",
+    "static/js/787.eaaab13d.chunk.js": "/social-network-js/static/js/787.eaaab13d.chunk.js",
+    "static/media/starWars.jpg": "/social-network-js/static/media/starWars.8b40794b3b2890343e8a.jpg",
+    "static/media/defaultAva.jpg": "/social-network-js/static/media/defaultAva.f9c91ffed30a8b382d17.jpg",
+    "static/media/bacground-body.jpg": "/social-network-js/static/media/bacground-body.6317e351dfbaba4962ae.jpg",
+    "static/media/preloader.gif": "/social-network-js/static/media/preloader.957ed9da3dbcadcb422f.gif",
+    "static/media/05.png": "/social-network-js/static/media/05.d25b070efa6b38a5c558.png",
+    "static/media/04.png": "/social-network-js/static/media/04.f0aa1c25c208fe880a87.png",
+    "static/media/03.png": "/social-network-js/static/media/03.e536f2e6d584628d8990.png",
+    "static/media/02.png": "/social-network-js/static/media/02.bab083ab90cbb526b504.png",
+    "static/media/01.png": "/social-network-js/static/media/01.9e3ed8d6997e237deaf3.png",
+    "static/media/weider.jpg": "/social-network-js/static/media/weider.0a3027c1e935c9dcbcd6.jpg",
+    "static/media/close.jpg": "/social-network-js/static/media/close.a4a4cc3869a22b0aebcd.jpg",
+    "index.html": "/social-network-js/index.html",
+    "main.ed4dd6b7.css.map": "/social-network-js/static/css/main.ed4dd6b7.css.map",
+    "main.784adad5.js.map": "/social-network-js/static/js/main.784adad5.js.map",
+    "787.eaaab13d.chunk.js.map": "/social-network-js/static/js/787.eaaab13d.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.ed4dd6b7.css",
+    "static/js/main.784adad5.js"
+  ]
+}
