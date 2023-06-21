@@ -1,11 +1,37 @@
-.span:hover{
+.statusBodyWrap{
+    display: flex;
+    position: relative;
+}
+
+.statusBodyWrap img{
+    width: 18px;
+    bottom: 0;
+    position: absolute;
+    right: 17px;
+}
+
+.statusBodyWrap img:hover{
     cursor: pointer;
 }
 
 .statusBody{
-    max-width: 300px;
+    max-width: 250px;
     max-height: 40px;
     overflow-wrap: break-word;
-    
+}
+
+.formWrap{
+    display: flex;
+    position: relative;
+}
+
+.formWrap img{
+    width: 20px;
+    position: absolute;
+    right: 40px;
+}
+
+.formWrap img:hover{
+    cursor: pointer;
 }
    

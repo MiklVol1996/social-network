@@ -3,12 +3,14 @@ import { stopSubmit } from "redux-form";
 import { setInitialized } from "./app.reducer";
 
 const SET_AUTH_DATA = 'SET-AUTH-DATA';
+const SET_CAPTCHA_URL = 'SET-CAPTCHA-URL';
 
 let initialState = {
     id: null,
     login: null,
     email: null,
     isAuth: false,
+    captchaURL: null,
 }
 
 const authReducer = (state = initialState, action) => {
@@ -19,6 +21,12 @@ const authReducer = (state = initialState, action) => {
                 ...action.data,
             }
         }
+        case SET_CAPTCHA_URL: {
+            return {
+                ...state,
+                captchaURL: action.url
+            }
+        }
         default: {
             return state;
         }
@@ -26,6 +34,7 @@ const authReducer = (state = initialState, action) => {
 }
 
 export const setAuthData = (login, id, email, isAuth) => ({ type: SET_AUTH_DATA, data: { id, login, email, isAuth } });
+export const setCaptchaURL = (url) => ({ type: SET_CAPTCHA_URL, url: url });
 
 export const authMe = () => async (dispatch) => {
     const data = await api.authMe();
@@ -40,6 +49,7 @@ export const authMe = () => async (dispatch) => {
 export const login = (data) => async (dispatch) => {
     const response = await api.login(data);
     if (response.resultCode === 0) {
+        dispatch(setCaptchaURL(null));
         const result = await dispatch(authMe());
         if (!result) {
             dispatch(setInitialized(true));
@@ -47,6 +57,10 @@ export const login = (data) => async (dispatch) => {
     } else {
         let message = response.messages.length > 0 ? response.messages[0] : 'some error';
         dispatch(stopSubmit('login', { _error: message }));
+        if (response.resultCode === 10) {
+            const captchaURL = await api.getCaptchaURL();
+            dispatch(setCaptchaURL(captchaURL));
+        }
     }
 }
 

@@ -9,15 +9,15 @@ import { createField } from "../common/fieldCreator/createField";
 const elem = Input(true);
 
 const LoginForm = (props) => {
-
+    
     return (
         <form onSubmit={props.handleSubmit}>
             <div className={classes.login}>
                 {createField('email', elem, 'Enter your login...', [required])}
             </div>
             <div className={classes.password}>
-                {createField('password', elem, 'Enter your password...', [required], 
-                'password')}
+                {createField('password', elem, 'Enter your password...', [required],
+                    'password')}
             </div>
             {
                 props.error
@@ -27,6 +27,15 @@ const LoginForm = (props) => {
                     : ''
             }
             {createField('rememberMe', 'input', '', [], 'checkbox', 'Remember me')}
+            {props.captchaURL
+                ? <div>
+                    <img src={props.captchaURL} />
+                    <div>
+                        {createField('captcha', elem, '', [required])}
+                    </div>
+                </div>
+                : ''
+            }
             <div className={classes.button}>
                 <button>Login</button>
             </div>

@@ -46,7 +46,7 @@ export const api = {
         const response = await instance.delete('auth/login');
         return response.data;
     },
-    async updateAva(data){
+    async updateAva(data) {
         const formData = new FormData();
         formData.append('image', data);
         const response = await instance.put('profile/photo', formData, {
@@ -56,9 +56,13 @@ export const api = {
         });
         return response.data;
     },
-    async updatePforileData (data){
-    const response =  await instance.put('profile/', data);
-    return response.data;
+    async updatePforileData(data) {
+        const response = await instance.put('profile/', data);
+        return response.data;
+    },
+    async getCaptchaURL() {
+        const response = await instance.get('security/get-captcha-url');
+        return response.data.url;
     }
 }
 

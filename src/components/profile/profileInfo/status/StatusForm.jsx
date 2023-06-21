@@ -5,7 +5,7 @@ import { createField } from "../../../common/fieldCreator/createField";
 import { Input } from "../../../common/formControls/FormsControls";
 import Button from "../../../common/button/Button";
 
-const checkMaxLength = maxLength(50);
+const checkMaxLength = maxLength(30);
 
 const statusForm = ({ handleSubmit, onBlur }) => {
     return (
