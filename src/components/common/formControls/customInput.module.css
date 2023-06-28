@@ -1,0 +1,28 @@
+.error{
+    color: red;
+    margin-bottom: 8px;
+}
+
+.input input:focus{
+    border: none;
+    outline: none;
+}
+
+.inputWrap input{
+    width: 210px;  
+    background-color: #e2e2e2;
+    height: 22px;
+    border: none;
+    outline: none;
+}
+
+.inputError input,
+.inputError input:focus{
+    border: none;
+    outline: none;
+    border: 2px solid red;
+}
+
+.inputWrap{
+    margin-bottom: 20px;
+}

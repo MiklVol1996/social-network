@@ -1,6 +1,7 @@
 .statusBodyWrap{
     display: flex;
     position: relative;
+    margin-bottom: 20px;
 }
 
 .statusBodyWrap img{
@@ -26,9 +27,10 @@
 }
 
 .formWrap img{
-    width: 20px;
+    width: 23px;
     position: absolute;
-    right: 40px;
+    right: 16px;
+    top: 2px;
 }
 
 .formWrap img:hover{

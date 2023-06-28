@@ -24,3 +24,35 @@
     color: red;
     margin-bottom: 10px;
 }
+
+
+
+
+
+
+
+.error{
+    border: 1px solid red;
+    color: red;
+}
+
+.emailInput{
+    margin-bottom: 10px;
+}
+
+.checkBox input{
+   margin-bottom: 15px;
+}
+
+.button{
+    width: 70px;
+}
+
+.captcha img{
+    width: 200px;
+    margin-bottom: 10px;
+}
+
+.captcha{
+    margin-bottom: 10px;
+}

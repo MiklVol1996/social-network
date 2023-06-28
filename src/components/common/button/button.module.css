@@ -9,3 +9,7 @@
 .buttonWrap button:hover{
     background-color: #7a7a7a;
 }
+
+.buttonWrap button:hover{
+    cursor: pointer;
+}

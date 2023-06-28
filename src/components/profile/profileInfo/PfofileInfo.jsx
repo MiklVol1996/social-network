@@ -53,8 +53,9 @@ const ProfileInfo = ({ profile, sendStatusToServer, status,
                             editMode
                                 ? <div className={classes.formWrap}>
                                     <img src={close} onClick={() => setEditMode(false)}/>
-                                    <EditProfileDataForm profile={profile} 
-                                onSubmit={onEditFinish} initialValues={profile}/>
+                                    <EditProfileDataForm profile={profile} updateProfileData={updateProfileData}/>
+                                    {/* <EditProfileDataForm profile={profile} 
+                                onSubmit={onEditFinish} initialValues={profile}/> */}
                                 </div>
                                 : <ProfileData profile={profile} isOwner={isOwner}
                                     setEditMode={setEditMode} />

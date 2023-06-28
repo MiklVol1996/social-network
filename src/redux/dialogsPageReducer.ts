@@ -9,7 +9,9 @@ let initialValue = {
     { id: 3, message: "I'm going to Tatuin, i need some money" },],
 };
 
-const dialogsPageReducer = (state = initialValue, action) => {
+type InitialValueType = typeof initialValue;
+
+const dialogsPageReducer = (state = initialValue, action: AddMessageActionType): InitialValueType => {
 
     switch(action.type){
         case ADD_MESSAGE: {
@@ -24,6 +26,11 @@ const dialogsPageReducer = (state = initialValue, action) => {
     }
 }
 
-export const addMessage = (message) => ({type: ADD_MESSAGE, message: message});
+type AddMessageActionType = {
+    type: typeof ADD_MESSAGE,
+    message: string,
+}
+
+export const addMessage = (message: string): AddMessageActionType => ({type: ADD_MESSAGE, message: message});
 
 export default dialogsPageReducer;

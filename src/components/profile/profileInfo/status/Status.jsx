@@ -1,7 +1,7 @@
 import React from "react";
 import { useState } from "react";
 import classes from './status.module.css';
-import { StatusFormRedux } from "./StatusForm";
+import StatusForm from "./StatusForm";
 import edit from '../../../../images/edit.jpg';
 import close from '../../../../images/close.jpg';
 
@@ -28,14 +28,12 @@ const Status = (props) => {
             {
                 editMode
                     ? <div className={classes.formWrap}>
-                        <img src={close} onClick={() => setEditMode(false)}/>
-                        <StatusFormRedux onSubmit={onStatusUpdate}
-                        initialValues={{'statusBody': props.status}}
-                        onBlur={switchEditMode}/>
+                        <img src={close} onClick={() => setEditMode(false)} />
+                        <StatusForm onStatusUpdate={(data) => onStatusUpdate(data)} initValue={props.status} />
                     </div>
-                    
+
                     : <div className={classes.statusBodyWrap}>
-                        {props.isOwner ? <img src={edit} onClick={() => setEditMode(true)}/> : ''}
+                        {props.isOwner ? <img src={edit} onClick={() => setEditMode(true)} /> : ''}
                         <div className={classes.statusBody}>{props.status || '-----'}</div>
                     </div>
             }

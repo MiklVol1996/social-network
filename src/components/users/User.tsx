@@ -1,8 +1,14 @@
 import React from 'react';
 import classes from './user.module.css';
 import { NavLink } from 'react-router-dom';
+import { UserType } from '../../types/types';
 
-const User = ({ user, defaultAva }) => {
+type PropsType = {
+    user: UserType,
+    defaultAva: any
+}
+
+const User: React.FC<PropsType> = ({ user, defaultAva }) => {
     return (
         <div className={classes.userWrap}>
             <div className={classes.photo}>
@@ -13,7 +19,7 @@ const User = ({ user, defaultAva }) => {
                 </NavLink>
             </div>
             <div>
-                {`${user.name} age : ${user.age}`}
+                {`${user.name} age : unknown`}
             </div>
             {user.followed
                 ? <div className={classes.isFriend}>

@@ -1,7 +1,14 @@
 import React from 'react';
 import classes from './button.module.css';
 
-const Button = ({ children, onClick, disabled }) => {
+type PropsType = {
+    children: string,
+    onClick?: () => void,
+    disabled?: boolean,
+}
+
+const Button: React.FC<PropsType> = ({ children, onClick, disabled }) => {
+    
     return (
         <div className={classes.buttonWrap}>
             <button disabled={disabled} onClick={onClick}>

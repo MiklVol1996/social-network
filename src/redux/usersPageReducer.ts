@@ -1,4 +1,6 @@
 import { api } from "../api/api";
+import { UserType } from "../types/types";
+import { Dispatch } from "react";
 
 const FOLLOW_UNFOLLOW = 'FOLLOW-UNFOLLOW';
 const SET_USERS = 'SET-USERS';
@@ -10,17 +12,18 @@ const ADD_TO_FOLLOWING_IN_PROGRESS = 'ADD-TO-FOLLOWING-IN-PROGRESS';
 const REMOVE_FROM_FOLLOWING_IN_PROGRESS = 'REMOVE-FROM-FOLLOWING-IN-PROGRESS';
 
 let initialState = {
-    users: [],
+    users: [] as Array<UserType>,
     currentPage: 1,
     pageSize: 4,
     totalCount: 0,
     numOfPages: 0,
     isFetching: false,
-    followingInProgress: [],
-
+    followingInProgress: [] as Array<number>, //array of users id
 }
 
-const usersPageReducer = (state = initialState, action) => {
+type InitialStateType = typeof initialState;
+
+const usersPageReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
     switch (action.type) {
         case FOLLOW_UNFOLLOW: {
             return {
@@ -87,16 +90,36 @@ const usersPageReducer = (state = initialState, action) => {
 
 export default usersPageReducer;
 
-export const followUnfollow = (id) => ({ type: FOLLOW_UNFOLLOW, userId: id });
-export const setUsers = (users) => ({ type: SET_USERS, users: users });
-export const setNumOfPages = (pages) => ({ type: SET_NUM_OF_PAGES, pages: pages });
-export const setCurrentPage = (page) => ({ type: SET_CURRENT_PAGE, page: page });
-export const setTotalCount = (count) => ({ type: SET_TOTAL_COUNT, count: count });
-export const setIsFetching = (isFetching) => ({ type: SET_IS_FETCHING, isFetching: isFetching });
-export const addFolowProg = (id) => ({ type: ADD_TO_FOLLOWING_IN_PROGRESS, id: id });
-export const removeFolowProg = (id) => ({ type: REMOVE_FROM_FOLLOWING_IN_PROGRESS, id: id });
+type ActionsTypes = FollowUnfollowActionType | SetUsersActionType | SetNumOfPagesActionType |
+    SetCurrentPageActionType | SetTotalCountActionType | SetIsFetchingActionType | AddFolowProgActionType |
+    RemoveFolowProgActionType;
 
-export const getFollowUnfollow = (isFollowed, id) => async (dispatch) => {
+type FollowUnfollowActionType = { type: typeof FOLLOW_UNFOLLOW, userId: number }
+export const followUnfollow = (id: number): FollowUnfollowActionType => ({ type: FOLLOW_UNFOLLOW, userId: id });
+
+type SetUsersActionType = { type: typeof SET_USERS, users: Array<UserType> }
+export const setUsers = (users: Array<UserType>): SetUsersActionType => ({ type: SET_USERS, users: users });
+
+type SetNumOfPagesActionType = { type: typeof SET_NUM_OF_PAGES, pages: number }
+export const setNumOfPages = (pages: number): SetNumOfPagesActionType => ({ type: SET_NUM_OF_PAGES, pages: pages });
+
+type SetCurrentPageActionType = { type: typeof SET_CURRENT_PAGE, page: number }
+export const setCurrentPage = (page: number): SetCurrentPageActionType => ({ type: SET_CURRENT_PAGE, page: page });
+
+type SetTotalCountActionType = { type: typeof SET_TOTAL_COUNT, count: number }
+export const setTotalCount = (count: number): SetTotalCountActionType => ({ type: SET_TOTAL_COUNT, count: count });
+
+type SetIsFetchingActionType = { type: typeof SET_IS_FETCHING, isFetching: boolean }
+export const setIsFetching = (isFetching: boolean): SetIsFetchingActionType => ({ type: SET_IS_FETCHING, isFetching: isFetching });
+
+type AddFolowProgActionType = { type: typeof ADD_TO_FOLLOWING_IN_PROGRESS, id: number }
+export const addFolowProg = (id: number): AddFolowProgActionType => ({ type: ADD_TO_FOLLOWING_IN_PROGRESS, id: id });
+
+type RemoveFolowProgActionType = { type: typeof REMOVE_FROM_FOLLOWING_IN_PROGRESS, id: number }
+export const removeFolowProg = (id: number): RemoveFolowProgActionType => ({ type: REMOVE_FROM_FOLLOWING_IN_PROGRESS, id: id });
+
+
+export const getFollowUnfollow = (isFollowed: boolean, id: number) => async (dispatch: Dispatch<ActionsTypes>) => {
 
     const method = isFollowed ? api.removeFriend : api.addFriend;
 
@@ -108,7 +131,7 @@ export const getFollowUnfollow = (isFollowed, id) => async (dispatch) => {
     }
 }
 
-export const getUsersFirstTime = (currentPage, pageSize) => async (dispatch) => {
+export const getUsersFirstTime = (currentPage: number, pageSize: number) => async (dispatch: Dispatch<ActionsTypes>) => {
     dispatch(setIsFetching(true));
     const data = await api.getUsers(currentPage, pageSize);
     setTimeout(() => {
@@ -119,7 +142,7 @@ export const getUsersFirstTime = (currentPage, pageSize) => async (dispatch) => 
         dispatch(setTotalCount(data.totalCount));
     }, 1700);
 }
-export const getUsers = (p, pageSize) => async (dispatch) => {
+export const getUsers = (p: number, pageSize: number) => async (dispatch: Dispatch<ActionsTypes>) => {
     const data = await api.getUsers(p, pageSize);
     dispatch(setUsers(data.items));
     dispatch(setCurrentPage(p));

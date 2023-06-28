@@ -5,12 +5,25 @@ import defaultAva from '../../images/defaultAva.jpg';
 import Preloader from '../common/preloader/Preloader';
 import Pagination from '../common/pagination/Pagination';
 import User from './User';
+import { UserType } from '../../types/types';
 
-const Users = ({ currentPage, users, numOfPages,
+type PropsType = {
+    currentPage: number,
+    users: Array<UserType>,
+    numOfPages: number,
+    isFetching: boolean,
+    folowInProgAr: Array<number>,
+    pageSize: number,
+
+    getFolUnfol: (followed: boolean, id: number) => void,
+    getUsers: (currentPage: number, pageSize: number) => void,
+}
+
+const Users: React.FC<PropsType> = ({ currentPage, users, numOfPages,
     isFetching, folowInProgAr, getFolUnfol,
     getUsers, pageSize }) => {
 
-    function swithPage(str) {
+    function swithPage(str: string) {
         switch (str) {
             case '-': {
                 if (currentPage !== 1) {
@@ -25,10 +38,9 @@ const Users = ({ currentPage, users, numOfPages,
                 break;
             }
         }
-
     }
 
-    const isDisabled = (arr, userID) => {
+    const isDisabled = (arr: Array<number>, userID: number) => {
         return arr.some(id => id === userID);
     }
 
@@ -42,13 +54,13 @@ const Users = ({ currentPage, users, numOfPages,
                             Users
                         </div>
                         <Pagination currentPage={currentPage} numOfPages={numOfPages}
-                            swithPage={swithPage} pageSize={pageSize} getUsers={getUsers}/>
+                            swithPage={swithPage} pageSize={pageSize} getUsers={getUsers} />
                         {users.map((user, i) => {
                             return (
                                 <div className={classes.userInfoWrap} key={i}>
-                                    <User user={user} defaultAva={defaultAva}/>
+                                    <User user={user} defaultAva={defaultAva} />
                                     <Button disabled={isDisabled(folowInProgAr, user.id)}
-                                        onClick={() => {getFolUnfol(user.followed, user.id)}}>
+                                        onClick={() => { getFolUnfol(user.followed, user.id) }}>
                                         {user.followed ? 'unfollowed' : 'followed'}
                                     </Button>
                                 </div>

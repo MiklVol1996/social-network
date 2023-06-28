@@ -1,12 +1,21 @@
 import React, { useMemo } from 'react';
 import classes from './pagination.module.css';
 
-const Pagination = ({ currentPage, numOfPages, swithPage,
+type Props = {
+    currentPage: number,
+    numOfPages: number,
+    pageSize: number,
+
+    swithPage: (str: string) => void,
+    getUsers: (pageNumber: number, pageSize: number) => void,
+}
+
+const Pagination: React.FC<Props> = ({ currentPage, numOfPages, swithPage,
     getUsers, pageSize }) => {
 
 
     let pages = useMemo(() => {
-        let arr = [];
+        let arr = [] as Array<string>;
         let i = currentPage - 5 <= 0 ? 1 : currentPage - 5;
         let max = i + 10;
         for (; i <= max; i++) {
@@ -18,9 +27,8 @@ const Pagination = ({ currentPage, numOfPages, swithPage,
         return arr;
     }, [currentPage, numOfPages]);
 
-    const getClassName = (p, curPage) => {
-       const name = p === curPage ? classes.active : classes.usual;
-       return name;
+    const getClassName = (p: number, curPage: number): string => {
+        return  p === curPage ? classes.active : classes.usual;
     }
 
     return (
