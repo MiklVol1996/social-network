@@ -1,7 +1,7 @@
 {
   "files": {
-    "main.css": "/social-network-js/static/css/main.ed4dd6b7.css",
-    "main.js": "/social-network-js/static/js/main.784adad5.js",
+    "main.css": "/social-network-js/static/css/main.50adf305.css",
+    "main.js": "/social-network-js/static/js/main.6ccbc91d.js",
     "static/js/787.eaaab13d.chunk.js": "/social-network-js/static/js/787.eaaab13d.chunk.js",
     "static/media/starWars.jpg": "/social-network-js/static/media/starWars.8b40794b3b2890343e8a.jpg",
     "static/media/defaultAva.jpg": "/social-network-js/static/media/defaultAva.f9c91ffed30a8b382d17.jpg",
@@ -13,14 +13,15 @@
     "static/media/02.png": "/social-network-js/static/media/02.bab083ab90cbb526b504.png",
     "static/media/01.png": "/social-network-js/static/media/01.9e3ed8d6997e237deaf3.png",
     "static/media/weider.jpg": "/social-network-js/static/media/weider.0a3027c1e935c9dcbcd6.jpg",
+    "static/media/edit.jpg": "/social-network-js/static/media/edit.894be10a40d1fbb5ee32.jpg",
     "static/media/close.jpg": "/social-network-js/static/media/close.a4a4cc3869a22b0aebcd.jpg",
     "index.html": "/social-network-js/index.html",
-    "main.ed4dd6b7.css.map": "/social-network-js/static/css/main.ed4dd6b7.css.map",
-    "main.784adad5.js.map": "/social-network-js/static/js/main.784adad5.js.map",
+    "main.50adf305.css.map": "/social-network-js/static/css/main.50adf305.css.map",
+    "main.6ccbc91d.js.map": "/social-network-js/static/js/main.6ccbc91d.js.map",
     "787.eaaab13d.chunk.js.map": "/social-network-js/static/js/787.eaaab13d.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ed4dd6b7.css",
-    "static/js/main.784adad5.js"
+    "static/css/main.50adf305.css",
+    "static/js/main.6ccbc91d.js"
   ]
 }
