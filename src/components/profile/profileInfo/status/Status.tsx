@@ -5,8 +5,13 @@ import StatusForm from "./StatusForm";
 import edit from '../../../../images/edit.jpg';
 import close from '../../../../images/close.jpg';
 
+type Props = {
+    sendStatusToServer: (text: string) => void,
+    status: string | null,
+    isOwner: boolean,
+}
 
-const Status = (props) => {
+const Status: React.FC<Props> = (props) => {
 
     let [editMode, setEditMode] = useState(false);
 
@@ -18,7 +23,7 @@ const Status = (props) => {
         setEditMode(true);
     }
 
-    const onStatusUpdate = (data) => {
+    const onStatusUpdate = (data: string) => {
         switchEditMode();
         props.sendStatusToServer(data);
     }
@@ -29,7 +34,7 @@ const Status = (props) => {
                 editMode
                     ? <div className={classes.formWrap}>
                         <img src={close} onClick={() => setEditMode(false)} />
-                        <StatusForm onStatusUpdate={(data) => onStatusUpdate(data)} initValue={props.status} />
+                        <StatusForm onStatusUpdate={(data) => onStatusUpdate(data)} initValue={props.status as string} />
                     </div>
 
                     : <div className={classes.statusBodyWrap}>

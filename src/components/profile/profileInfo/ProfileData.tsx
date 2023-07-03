@@ -1,8 +1,15 @@
 import React from 'react';
 import Button from '../../common/button/Button';
 import classes from './profileData.module.css';
+import { ProfileType, ContactsProfileType } from '../../../types/types';
 
-const ProfileData = ({ profile, isOwner, setEditMode }) => {
+type Props = {
+    profile: ProfileType, 
+    isOwner: boolean, 
+    setEditMode: (is: boolean) => void,
+}
+
+const ProfileData: React.FC<Props> = ({ profile, isOwner, setEditMode }) => {
     return (
         <div className={classes.right}>
             <div className={classes.about}>
@@ -28,7 +35,7 @@ const ProfileData = ({ profile, isOwner, setEditMode }) => {
                     {Object.keys(profile.contacts).map((el, i) => {
                         return (
                             <div key={i} className={classes.contWrap}><b>{el}:</b>&nbsp;&nbsp;&nbsp;<br />
-                                {profile.contacts[el]}
+                                {profile.contacts[el as keyof ContactsProfileType]}
                             </div>
                         )
                     })}
@@ -37,4 +44,5 @@ const ProfileData = ({ profile, isOwner, setEditMode }) => {
         </div>
     )
 }
+
 export default ProfileData;

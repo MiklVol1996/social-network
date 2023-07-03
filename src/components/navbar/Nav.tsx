@@ -2,12 +2,11 @@ import React from 'react';
 import classes from './nav.module.css';
 import { NavLink } from 'react-router-dom';
 
-const Nav = () => {
+const Nav: React.FC = () => {
 
-  function getClassName(str){
+  function getClassName(str: string){
     let className = 'active' + str;
-    return function ({isActive}){
-      
+    return function ({isActive}: {isActive: boolean}){
       return isActive? classes[className] : classes.usual;
     }
   }
@@ -47,4 +46,5 @@ const Nav = () => {
     </nav>
   )
 }
+
 export default Nav;

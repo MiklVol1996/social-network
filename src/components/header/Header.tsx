@@ -8,7 +8,12 @@ import purple from '../../images/05.png'
 import { Route, Routes } from 'react-router-dom';
 import starWars from '../../images/starWars.jpg';
 
-const Header = ({ login, logout }) => {
+type Props = {
+  login: string | null,
+  logout: () => void,
+}
+
+const Header: React.FC<Props> = ({ login, logout }) => {
   return (
     <header className={classes.header}>
       <div className={classes.label}>

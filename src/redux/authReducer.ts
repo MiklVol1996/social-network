@@ -1,14 +1,7 @@
-import { api } from "../api/api";
-import { stopSubmit } from "redux-form";
-import { setInitialized } from "./app.reducer";
-import { ResultCodeEnum, ResultCodeWithCaptchaEnum } from "../api/api";
-import type { LoginDataType } from "../types/types";
-
-
-const SET_AUTH_DATA = 'SET-AUTH-DATA';
-const SET_CAPTCHA_URL = 'SET-CAPTCHA-URL';
-
-type InitialStateType = typeof initialState;
+import { apiLogin } from "../api/apiLogin";
+import { actions, ActionsType as ActionsTypeFromPfofile } from "./app.reducer";
+import { GetActionTypes, ThunkType } from "./store";
+import { ResultCodeEnum } from "../types/types";
 
 
 let initialState = {
@@ -21,8 +14,8 @@ let initialState = {
 
 const authReducer = (state = initialState, action: ActionTypes): InitialStateType => {
     switch (action.type) {
-        case SET_AUTH_DATA:
-        case SET_CAPTCHA_URL: {
+        case "SET_AUTH_DATA":
+        case "SET_CAPTCHA_URL": {
             return {
                 ...state,
                 ...action.data,
@@ -34,52 +27,38 @@ const authReducer = (state = initialState, action: ActionTypes): InitialStateTyp
     }
 }
 
-type setAuthDataActionType = {
-    type: typeof SET_AUTH_DATA,
-    data: {
-        id: null | number,
-        login: null | string,
-        email: null | string,
-        isAuth: boolean,
-    }
+export const actionCreators = {
+     setAuthData: (login: string | null, id: number | null, email: string | null, isAuth: boolean) => ({ type: 'SET_AUTH_DATA', data: { id, login, email, isAuth } } as const),
+     setCaptchaURL: (url: string | null) => ({ type: 'SET_CAPTCHA_URL', data: { captchaURL: url } } as const),
 }
 
-type setCaptchaURLActionType = {
-    type: typeof SET_CAPTCHA_URL,
-    data: {
-        captchaURL: string | null,
-    }
-}
-
-type ActionTypes = setAuthDataActionType | setCaptchaURLActionType;
-
-export const setAuthData = (login: string | null, id: number | null, email: string | null, isAuth: boolean): setAuthDataActionType => ({ type: SET_AUTH_DATA, data: { id, login, email, isAuth } });
-export const setCaptchaURL = (url: string | null): setCaptchaURLActionType => ({ type: SET_CAPTCHA_URL, data: { captchaURL: url } });
-
-export const authMe = () => async (dispatch: any) => {
-    const data = await api.authMe();
+export const authMe = (): ThunkType<ActionTypes> => async (dispatch) => {
+    const data = await apiLogin.authMe();
     if (data.resultCode === ResultCodeEnum.Success) {
         let { id, email, login } = data.data;
-        dispatch(setAuthData(login, id, email, true));
+        dispatch(actionCreators.setAuthData(login, id, email, true));
     } else {
         return 'not autorized';
     }
 }
 
-export const login = () => async (dispatch: any) => {
-    dispatch(setCaptchaURL(null));
+export const login = (): ThunkType<ActionTypes | ActionsTypeFromPfofile> => async (dispatch) => {
+    dispatch(actionCreators.setCaptchaURL(null));
     const result = await dispatch(authMe());
     if (!result) {
-        dispatch(setInitialized(true));
+        dispatch(actions.setInitialized(true));
     }
 }
 
-export const logout = () => async (dispatch: any) => {
-    const data = await api.logout();
+export const logout = (): ThunkType<ActionTypes | ActionsTypeFromPfofile> => async (dispatch: any) => {
+    const data = await apiLogin.logout();
     if (data.resultCode === ResultCodeEnum.Success) {
-        dispatch(setInitialized(false));
-        dispatch(setAuthData(null, null, null, false));
+        dispatch(actions.setInitialized(false));
+        dispatch(actionCreators.setAuthData(null, null, null, false));
     }
 }
 
 export default authReducer;
+
+type InitialStateType = typeof initialState;
+type ActionTypes = GetActionTypes<typeof actionCreators>;

@@ -1,17 +1,13 @@
-import React, { ChangeEventHandler } from "react";
-import { useForm, SubmitHandler, Controller } from "react-hook-form";
+import React from "react";
+import { useForm, SubmitHandler } from "react-hook-form";
 import Button from "../../../common/button/Button";
-import Input from "../../../common/formControls/CustomInputForm";
-
-interface StatusFormType {
-    status: string,
-}
+import { CreateController } from "../../../common/fieldCreator/createControllers";
+import { StatusFormType } from "../../../../types/types";
 
 type PropsType = {
     onStatusUpdate: (data: string) => void,
     initValue: string,
 }
-
 
 const StatusForm: React.FC<PropsType> = ({ onStatusUpdate, initValue }) => {
 
@@ -26,12 +22,8 @@ const StatusForm: React.FC<PropsType> = ({ onStatusUpdate, initValue }) => {
     return (
         <div>
             <form onSubmit={handleSubmit(onStatusSubmit)}>
-                <Controller
-                control={control}
-                name='status'
-                rules={{maxLength: {value: 30, message: 'max length is 30 symbols'}}}
-                render={({field}) => <Input {...field} 
-                error={errors.status?.message} autoFocus={true}/>}/>
+                {CreateController<Extract<keyof StatusFormType, string>>("status", errors.status?.message,
+                30, control, false, true)}
                 <Button>Update</Button>
             </form>
         </div>

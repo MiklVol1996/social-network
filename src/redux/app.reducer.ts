@@ -1,16 +1,15 @@
+import { GetActionTypes } from './store';
 import { authMe } from "./authReducer";
+import { ThunkType } from './store';
 
-const SET_INITIALIZED = 'SET-INITIALIZED';
 
-type InitialStateType = typeof initialState;
-   
 let initialState = {
     isInitialized: false,
 }
 
-const appReducer = (state = initialState, action: setInitializedActionType): InitialStateType => {
+const appReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case SET_INITIALIZED: {
+        case 'SET-INITIALIZED': {
             return {
                 ...state,
                 isInitialized: action.isInitialized,
@@ -22,20 +21,19 @@ const appReducer = (state = initialState, action: setInitializedActionType): Ini
     }
 }
 
-type setInitializedActionType = {
-    type: typeof SET_INITIALIZED,
-    isInitialized: boolean,
+export const actions = {
+    setInitialized: (isInitialized: boolean) => ({ type: 'SET-INITIALIZED', isInitialized: isInitialized } as const),
 }
 
-export const setInitialized = (isInitialized: boolean): setInitializedActionType => ({ type: SET_INITIALIZED, isInitialized: isInitialized });
 
-export const getInitialized = () => async (dispatch: any) => {
-
+export const getInitialized = (): ThunkType<ActionsType> => async (dispatch) => {
     const response = await dispatch(authMe());
     if (!response) {
-        dispatch(setInitialized(true));
+        dispatch(actions.setInitialized(true));
     }
 }
 
-
 export default appReducer;
+
+type InitialStateType = typeof initialState;
+export type ActionsType = GetActionTypes<typeof actions>;

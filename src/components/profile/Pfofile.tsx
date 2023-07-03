@@ -2,8 +2,18 @@ import React from 'react';
 import classes from './profile.module.css';
 import PostsContainer from './posts/PostsContainer';
 import ProfileInfo from './profileInfo/PfofileInfo';
+import { ProfileType } from '../../types/types';
 
-const Profile = ({ profile, sendStatusToServer, status, 
+type Props = {
+    profile: ProfileType | null, 
+    sendStatusToServer: (text: string) => void, 
+    status: string | null, 
+    uploadNewPhoto: (data: any) => void, 
+    isOwner: boolean, 
+    updateProfileData: () => void,
+}
+
+const Profile: React.FC<Props> = ({ profile, sendStatusToServer, status, 
      uploadNewPhoto, isOwner, updateProfileData }) => {
         
     return (
@@ -19,4 +29,5 @@ const Profile = ({ profile, sendStatusToServer, status,
         </div>
     )
 }
+
 export default Profile;

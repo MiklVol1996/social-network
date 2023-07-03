@@ -1,14 +1,15 @@
 import React from "react";
 import classes from './loginForm.module.css';
-import { useForm, Controller } from "react-hook-form";
-import Input from "../common/formControls/CustomInputForm";
-import { api } from "../../api/api";
-import { ResultCodeEnum, ResultCodeWithCaptchaEnum } from "../../api/api";
+import { useForm } from "react-hook-form";
+import { apiLogin } from "../../api/apiLogin";
+import { ResultCodeEnum, ResultCodeWithCaptchaEnum } from "../../types/types";
+import { CreateController } from "../common/fieldCreator/createControllers";
+import { LoginFormNames } from "../../types/types";
 
 type PropsType = {
     login: () => void,
     captchaURL: string | null,
-    setCaptchaURL: (url: string | null) => void,
+    setCaptchaURL: (captcha: string | null) => void,
 }
 
 type FormType = {
@@ -18,29 +19,20 @@ type FormType = {
     captcha?: string,
 }
 
-const CreateController = (name: string, placeholder: string, errorMes: string | undefined, 
-    control: any, autoFocus: boolean, type?: string) => {
-    return (
-        <Controller name={name} control={control}
-            render={({ field }) => <Input {...field} autoFocus={autoFocus}
-                placeholder={placeholder} error={errorMes} type={type}/>}
-            rules={{ required: 'field is required' }} />
-    )
-}
-
 const LoginForm: React.FC<PropsType> = ({ login, setCaptchaURL, captchaURL }) => {
-
-    const { control, handleSubmit, register, setError, formState: { errors } } = useForm<FormType>({ mode: 'onTouched' });
+    const { control, handleSubmit, register, setError, formState: { errors } } = useForm<FormType>({ 
+        mode: 'onTouched' 
+    });
 
     const onSubmit = async (data: FormType) => {
-        const response = await api.login(data);
+        const response = await apiLogin.login(data);
         if (response.resultCode === ResultCodeEnum.Success) {
             login();
         } else {
             let message = response.messages.length > 0 ? response.messages[0] : 'some error';
             setError('rememberMe', { message: message });
             if (response.resultCode === ResultCodeWithCaptchaEnum.CaptchaIsRequired) {
-                const captchaURL = await api.getCaptchaURL();
+                const captchaURL = await apiLogin.getCaptchaURL();
                 setCaptchaURL(captchaURL);
             }
         }
@@ -50,9 +42,11 @@ const LoginForm: React.FC<PropsType> = ({ login, setCaptchaURL, captchaURL }) =>
         <div>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={classes.emailInput}>
-                    {CreateController('email', 'Enter your login...', errors.email?.message, control, true)}
+                    {CreateController<Extract<keyof LoginFormNames, string>>("email", errors.email?.message,
+                    50, control, true, true, 'Enter your login...')}
                 </div>
-                {CreateController('password', 'Enter your password...', errors.password?.message, control, false, 'password')}
+                {CreateController<Extract<keyof LoginFormNames, string>>("password", errors.password?.message,
+                    50, control, true, false, 'Enter your password...', 'password')}
                 {errors.rememberMe?.message && <div className={classes.error}>{errors.rememberMe?.message}</div>}
                 <div className={classes.checkBox}>
                     Remember me&nbsp;
@@ -63,7 +57,8 @@ const LoginForm: React.FC<PropsType> = ({ login, setCaptchaURL, captchaURL }) =>
                         ?
                         <div>
                             <img src={captchaURL} />
-                            {CreateController('captcha', 'Enter captcha...', errors.captcha?.message, control, false)}
+                            {CreateController<Extract<keyof LoginFormNames, string>>("captcha", 
+                            errors.captcha?.message, 50, control, true, false, 'Enter captcha...')}
                         </div>
                         : ''}
                 </div>

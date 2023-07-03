@@ -1,4 +1,4 @@
-const ADD_MESSAGE = 'ADD-MESSAGE';
+import { GetActionTypes } from "./store";
 
 let initialValue = {
     dialogs: [{ id: 1, name: 'Obi Wan Kenobi' },
@@ -9,12 +9,10 @@ let initialValue = {
     { id: 3, message: "I'm going to Tatuin, i need some money" },],
 };
 
-type InitialValueType = typeof initialValue;
-
-const dialogsPageReducer = (state = initialValue, action: AddMessageActionType): InitialValueType => {
+const dialogsPageReducer = (state = initialValue, action: ActionsType): DialogsPageInitialValueType => {
 
     switch(action.type){
-        case ADD_MESSAGE: {
+        case 'ADD-MESSAGE': {
             return {
                 ...state,
                 messages: [...state.messages, {id: 4, message: action.message}],
@@ -26,11 +24,11 @@ const dialogsPageReducer = (state = initialValue, action: AddMessageActionType):
     }
 }
 
-type AddMessageActionType = {
-    type: typeof ADD_MESSAGE,
-    message: string,
+export const actions = {
+    addMessage: (message: string) => ({type: 'ADD-MESSAGE', message: message} as const),
 }
 
-export const addMessage = (message: string): AddMessageActionType => ({type: ADD_MESSAGE, message: message});
-
 export default dialogsPageReducer;
+
+export type DialogsPageInitialValueType = typeof initialValue;
+type ActionsType = GetActionTypes<typeof actions>;

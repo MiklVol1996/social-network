@@ -15,6 +15,7 @@ export type PhotosProfileType = {
 }
 
 export type ProfileType = {
+    aboutMe: string,
     userId: number,
     lookingForAJob: boolean,
     lookingForAJobDescription: string,
@@ -40,7 +41,7 @@ export type UserType = {
     followed: boolean,
 }
 
-export type LoginDataType = {
+export type LoginArgumentsType = {
     email: string,
     password: string,
     rememberMe: boolean,
@@ -50,4 +51,59 @@ export type LoginDataType = {
 export type statusDataType = {
     statusBody: string,
 }
+
+export type EditProfileFormNamesType = {
+    'aboutMe': string,
+    'lookingForAJobDescription': string,
+    'fullName': string,
+    'contacts.github': string,
+    'contacts.vk': string,
+    'contacts.facebook': string,
+    'contacts.instagram': string,
+    'contacts.twitter': string,
+    'contacts.website': string,
+    'contacts.youtube': string,
+    'contacts.mainLink': string,
+}
+
+export type LoginFormNames = {
+    'email': string,
+    'password': string,
+    'captcha': string,
+}
+
+export type StatusFormType = {
+    'status': string,
+}
+
+export type ResponseType<D = {}, E = ResultCodeEnum> = {
+    messages: Array<string>,
+    resultCode: E,
+    data: D
+}
+
+export enum ResultCodeEnum {
+    Success = 0,
+    Error = 1,
+}
+
+export enum ResultCodeWithCaptchaEnum {
+    CaptchaIsRequired = 10,
+}
+
+export interface AvaArgumentsType extends Blob  {
+    lastModified: number,
+    lastModifiedDate: string,
+    name: string,
+    size: number,
+    type: string,
+    webkitRelativePath: string,
+}
+
+export type PostType = {
+    id: number, 
+    message: string, 
+    likesCount: string,
+}
+
 

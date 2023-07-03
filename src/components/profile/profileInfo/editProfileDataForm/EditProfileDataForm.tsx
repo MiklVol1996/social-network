@@ -1,11 +1,12 @@
 import React from 'react';
 import classes from '../profileData.module.css';
 import Button from '../../../common/button/Button';
-import { useForm, Controller } from 'react-hook-form';
-import Input from '../../../common/formControls/CustomInputForm';
-import { ProfileType, ContactsProfileType } from '../../../../types/types';
-import { api } from '../../../../api/api';
-import { ResultCodeEnum } from '../../../../api/api';
+import { useForm } from 'react-hook-form';
+import { ProfileType, ContactsProfileType, EditProfileFormNamesType, 
+    ResultCodeEnum } from '../../../../types/types';
+import { apiProfile } from '../../../../api/apiProfile';
+import { CreateController } from '../../../common/fieldCreator/createControllers';
+import { ErrorMessageHandler } from '../../../utils/errorMessageHandler';
 
 type PropsType = {
     profile: ProfileType,
@@ -20,20 +21,6 @@ type FormTypes = {
     contacts: ContactsProfileType
 }
 
-const CreateController = (name: string, errorMes: string | undefined, control: any,
-    required: boolean, maxLength: number, type?: string) => {
-    return (
-        <Controller name={name} control={control}
-            render={({ field }) => <Input {...field} error={errorMes} type={type} />}
-            rules={{
-                required: required ? 'field is required' : false, maxLength: {
-                    value: maxLength,
-                    message: `max length is ${maxLength} symbols`
-                }
-            }} />
-    )
-}
-
 const EditProfileDataForm: React.FC<PropsType> = ({ profile, updateProfileData }) => {
 
     const { control, handleSubmit, formState: { errors }, setError, register } = useForm<FormTypes>({
@@ -42,18 +29,11 @@ const EditProfileDataForm: React.FC<PropsType> = ({ profile, updateProfileData }
     });
 
     const onSubmit = async (data: FormTypes) => {
-        const answer = await api.updatePforileData({ ...data, userId: profile.userId });
+        const answer = await apiProfile.updatePforileData({ ...data, userId: profile.userId });
         if (answer.resultCode === ResultCodeEnum.Success) {
             updateProfileData();
         } else {
-            const length = answer.messages.length;
-            for (let i = 0; i < length; i++) {
-                const name = answer.messages[i].split('>')[1].split('');
-                name.pop();
-                const finalName = name.join('').toLowerCase();
-                // @ts-ignore
-                setError(`contacts.${finalName}`, { message: 'invalid URL' })
-            }
+            ErrorMessageHandler(answer.messages, setError);
         }
     }
 
@@ -62,11 +42,13 @@ const EditProfileDataForm: React.FC<PropsType> = ({ profile, updateProfileData }
             <div className={classes.about}>
                 <div className={classes.aboutItem}>
                     <span><b>Full name:&nbsp;&nbsp;&nbsp;</b></span><br />
-                    {CreateController('fullName', errors.fullName?.message, control, true, 15)}
+                    {CreateController<Extract<keyof EditProfileFormNamesType, string>>('fullName',
+                    errors.fullName?.message, 15, control, true, false)}
                 </div>
                 <div className={classes.aboutItem}>
                     <span><b>About me:&nbsp;&nbsp;&nbsp;</b></span><br />
-                    {CreateController('aboutMe', errors.aboutMe?.message, control, true, 70)}
+                    {CreateController<Extract<keyof EditProfileFormNamesType, string>>('aboutMe',
+                    errors.aboutMe?.message, 70, control, true, false)}
                 </div>
                 <div className={classes.aboutItem}>
                     <span><b>Looking for a job:&nbsp;&nbsp;&nbsp;</b></span><br />
@@ -74,7 +56,8 @@ const EditProfileDataForm: React.FC<PropsType> = ({ profile, updateProfileData }
                 </div>
                 <div className={classes.aboutItem}>
                     <span><b>Looking for a job description:&nbsp;&nbsp;&nbsp;</b></span><br />
-                    {CreateController('lookingForAJobDescription', errors.lookingForAJobDescription?.message, control, true, 70)}
+                    {CreateController<Extract<keyof EditProfileFormNamesType, string>>('lookingForAJobDescription',
+                    errors.lookingForAJobDescription?.message, 70, control, true, false)}
                 </div>
                 <Button>Update</Button>
             </div>
@@ -86,9 +69,9 @@ const EditProfileDataForm: React.FC<PropsType> = ({ profile, updateProfileData }
                     {Object.keys(profile.contacts).map((el, i) => {
                         return (
                             <div key={i}><b>{el}:</b>&nbsp;&nbsp;&nbsp;
-                                {CreateController(`contacts.${el}`,
-                                    // @ts-ignore
-                                    errors.contacts?.[el]?.message, control, false, 25)}
+                            {CreateController<Extract<keyof EditProfileFormNamesType, string>>(
+                                `contacts.${el}` as keyof EditProfileFormNamesType,
+                                errors.contacts?.[el as keyof ContactsProfileType]?.message, 25, control, false, false)}
                             </div>
                         )
                     })}

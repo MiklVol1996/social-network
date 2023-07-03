@@ -2,9 +2,14 @@ import React from "react";
 import { NavLink } from 'react-router-dom';
 import classes from './dialog.module.css';
 
-const Dialog = (props) => {
+type Props = {
+    id: number,
+    name: string,
+}
 
-    function getClassName({ isActive }) {
+const Dialog: React.FC<Props> = (props) => {
+
+    function getClassName({ isActive }: {isActive: boolean}) {
         return isActive ? classes.active : classes.dialog;
     }
 

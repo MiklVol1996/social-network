@@ -1,15 +1,6 @@
-import { api } from "../api/api";
-import { UserType } from "../types/types";
-import { Dispatch } from "react";
-
-const FOLLOW_UNFOLLOW = 'FOLLOW-UNFOLLOW';
-const SET_USERS = 'SET-USERS';
-const SET_NUM_OF_PAGES = 'SET-NUM-OF-PAGES';
-const SET_CURRENT_PAGE = 'SET-CURRENT-PAGE';
-const SET_TOTAL_COUNT = 'SET-TOTAL-COUNT';
-const SET_IS_FETCHING = 'SET-IS-FETCHING';
-const ADD_TO_FOLLOWING_IN_PROGRESS = 'ADD-TO-FOLLOWING-IN-PROGRESS';
-const REMOVE_FROM_FOLLOWING_IN_PROGRESS = 'REMOVE-FROM-FOLLOWING-IN-PROGRESS';
+import { apiUsers } from "../api/apiUsers";
+import { UserType, ResultCodeEnum } from "../types/types";
+import { GetActionTypes, ThunkType } from "./store";
 
 let initialState = {
     users: [] as Array<UserType>,
@@ -21,11 +12,9 @@ let initialState = {
     followingInProgress: [] as Array<number>, //array of users id
 }
 
-type InitialStateType = typeof initialState;
-
-const usersPageReducer = (state = initialState, action: ActionsTypes): InitialStateType => {
+const usersPageReducer = (state = initialState, action: ActionsType): InitialStateType => {
     switch (action.type) {
-        case FOLLOW_UNFOLLOW: {
+        case 'FOLLOW-UNFOLLOW': {
             return {
                 ...state,
                 users: state.users.map(user => {
@@ -36,43 +25,43 @@ const usersPageReducer = (state = initialState, action: ActionsTypes): InitialSt
                 })
             }
         }
-        case SET_USERS: {
+        case 'SET-USERS': {
             return {
                 ...state,
                 users: [...action.users]
             }
         }
-        case SET_NUM_OF_PAGES: {
+        case 'SET-NUM-OF-PAGES': {
             return {
                 ...state,
                 numOfPages: action.pages,
             }
         }
-        case SET_CURRENT_PAGE: {
+        case 'SET-CURRENT-PAGE': {
             return {
                 ...state,
                 currentPage: action.page,
             }
         }
-        case SET_TOTAL_COUNT: {
+        case 'SET-TOTAL-COUNT': {
             return {
                 ...state,
                 totalCount: action.count,
             }
         }
-        case SET_IS_FETCHING: {
+        case 'SET-IS-FETCHING': {
             return {
                 ...state,
                 isFetching: action.isFetching,
             }
         }
-        case ADD_TO_FOLLOWING_IN_PROGRESS: {
+        case 'ADD-TO-FOLLOWING-IN-PROGRESS': {
             return {
                 ...state,
                 followingInProgress: [...state.followingInProgress, action.id],
             }
         }
-        case REMOVE_FROM_FOLLOWING_IN_PROGRESS: {
+        case 'REMOVE-FROM-FOLLOWING-IN-PROGRESS': {
             return {
                 ...state,
                 followingInProgress: state.followingInProgress.filter(id => {
@@ -88,62 +77,49 @@ const usersPageReducer = (state = initialState, action: ActionsTypes): InitialSt
     }
 }
 
-export default usersPageReducer;
-
-type ActionsTypes = FollowUnfollowActionType | SetUsersActionType | SetNumOfPagesActionType |
-    SetCurrentPageActionType | SetTotalCountActionType | SetIsFetchingActionType | AddFolowProgActionType |
-    RemoveFolowProgActionType;
-
-type FollowUnfollowActionType = { type: typeof FOLLOW_UNFOLLOW, userId: number }
-export const followUnfollow = (id: number): FollowUnfollowActionType => ({ type: FOLLOW_UNFOLLOW, userId: id });
-
-type SetUsersActionType = { type: typeof SET_USERS, users: Array<UserType> }
-export const setUsers = (users: Array<UserType>): SetUsersActionType => ({ type: SET_USERS, users: users });
-
-type SetNumOfPagesActionType = { type: typeof SET_NUM_OF_PAGES, pages: number }
-export const setNumOfPages = (pages: number): SetNumOfPagesActionType => ({ type: SET_NUM_OF_PAGES, pages: pages });
-
-type SetCurrentPageActionType = { type: typeof SET_CURRENT_PAGE, page: number }
-export const setCurrentPage = (page: number): SetCurrentPageActionType => ({ type: SET_CURRENT_PAGE, page: page });
-
-type SetTotalCountActionType = { type: typeof SET_TOTAL_COUNT, count: number }
-export const setTotalCount = (count: number): SetTotalCountActionType => ({ type: SET_TOTAL_COUNT, count: count });
-
-type SetIsFetchingActionType = { type: typeof SET_IS_FETCHING, isFetching: boolean }
-export const setIsFetching = (isFetching: boolean): SetIsFetchingActionType => ({ type: SET_IS_FETCHING, isFetching: isFetching });
-
-type AddFolowProgActionType = { type: typeof ADD_TO_FOLLOWING_IN_PROGRESS, id: number }
-export const addFolowProg = (id: number): AddFolowProgActionType => ({ type: ADD_TO_FOLLOWING_IN_PROGRESS, id: id });
-
-type RemoveFolowProgActionType = { type: typeof REMOVE_FROM_FOLLOWING_IN_PROGRESS, id: number }
-export const removeFolowProg = (id: number): RemoveFolowProgActionType => ({ type: REMOVE_FROM_FOLLOWING_IN_PROGRESS, id: id });
+const actions = {
+    followUnfollow: (id: number) => ({ type: 'FOLLOW-UNFOLLOW', userId: id } as const),
+    setUsers: (users: Array<UserType>) => ({ type: 'SET-USERS', users: users } as const),
+    setNumOfPages: (pages: number) => ({ type: 'SET-NUM-OF-PAGES', pages: pages } as const),
+    setCurrentPage: (page: number) => ({ type: 'SET-CURRENT-PAGE', page: page } as const),
+    setTotalCount: (count: number) => ({ type: 'SET-TOTAL-COUNT', count: count } as const),
+    setIsFetching: (isFetching: boolean) => ({ type: 'SET-IS-FETCHING', isFetching: isFetching } as const),
+    addFolowProg: (id: number) => ({ type: 'ADD-TO-FOLLOWING-IN-PROGRESS', id: id } as const),
+    removeFolowProg: (id: number) => ({ type: 'REMOVE-FROM-FOLLOWING-IN-PROGRESS', id: id } as const),
+}
 
 
-export const getFollowUnfollow = (isFollowed: boolean, id: number) => async (dispatch: Dispatch<ActionsTypes>) => {
-
-    const method = isFollowed ? api.removeFriend : api.addFriend;
-
-    dispatch(addFolowProg(id));
+export const getFollowUnfollow = (isFollowed: boolean, id: number): ThunkType<ActionsType> => 
+async (dispatch) => {
+    const method = isFollowed ? apiUsers.removeFriend : apiUsers.addFriend;
+    dispatch(actions.addFolowProg(id));
     const data = await method(id);
-    if (data.resultCode === 0) {
-        dispatch(followUnfollow(id));
-        dispatch(removeFolowProg(id));
+    if (data.resultCode === ResultCodeEnum.Success) {
+        dispatch(actions.followUnfollow(id));
+        dispatch(actions.removeFolowProg(id));
     }
 }
 
-export const getUsersFirstTime = (currentPage: number, pageSize: number) => async (dispatch: Dispatch<ActionsTypes>) => {
-    dispatch(setIsFetching(true));
-    const data = await api.getUsers(currentPage, pageSize);
+export const getUsersFirstTime = (currentPage: number, pageSize: number): ThunkType<ActionsType> => 
+async (dispatch) => {
+    dispatch(actions.setIsFetching(true));
+    const data = await apiUsers.getUsers(currentPage, pageSize);
     setTimeout(() => {
-        dispatch(setIsFetching(false));
+        dispatch(actions.setIsFetching(false));
         let numOfPages = Math.ceil(data.totalCount / pageSize);
-        dispatch(setNumOfPages(numOfPages));
-        dispatch(setUsers(data.items));
-        dispatch(setTotalCount(data.totalCount));
+        dispatch(actions.setNumOfPages(numOfPages));
+        dispatch(actions.setUsers(data.items));
+        dispatch(actions.setTotalCount(data.totalCount));
     }, 1700);
 }
-export const getUsers = (p: number, pageSize: number) => async (dispatch: Dispatch<ActionsTypes>) => {
-    const data = await api.getUsers(p, pageSize);
-    dispatch(setUsers(data.items));
-    dispatch(setCurrentPage(p));
+
+export const getUsers = (p: number, pageSize: number): ThunkType<ActionsType> => async (dispatch) => {
+    const data = await apiUsers.getUsers(p, pageSize);
+    dispatch(actions.setUsers(data.items));
+    dispatch(actions.setCurrentPage(p));
 }
+
+export default usersPageReducer;
+
+type InitialStateType = typeof initialState;
+type ActionsType = GetActionTypes<typeof actions>;
