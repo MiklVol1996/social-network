@@ -15,6 +15,10 @@
     width: 0;
 }
 
+.wrap{
+    scrollbar-width: none;
+}
+
 .down{
     position: fixed;
     top: 80px;

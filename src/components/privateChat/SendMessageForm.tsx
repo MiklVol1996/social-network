@@ -6,6 +6,7 @@ import { useDispatch } from 'react-redux';
 import { Action } from 'redux';
 import classes from'./sendMesForm.module.css';
 
+
 const SendMessageForm: React.FC<{id: string | undefined}> = React.memo(({id}) => {
 
     let [text, setText] = useState('');

@@ -64,7 +64,7 @@ const PrivateChat: React.FC = React.memo(() => {
         const top = e.currentTarget.scrollTop;
         if (!top && !isTopVisib) { setIsTopVisib(true) }
         if (top && isTopVisib) { setIsTopVisib(false) }
-        if (height - top < 650 && !isBottomVisib) { setIsBottomVisib(true) }
+        if (height - top < 850 && !isBottomVisib) { setIsBottomVisib(true) }
         if (height - top > 660 && isBottomVisib) { setIsBottomVisib(false) }
         if (height - top > 1000) { setIsDownVisib(true) }
         if (height - top < 600) { setIsDownVisib(false) }
@@ -108,7 +108,7 @@ const PrivateChat: React.FC = React.memo(() => {
                         :
                         <div className={classes.empty}>
                             <div className={classes.emptyMes}>The list of mesages is empty</div>
-                            <SendMessageForm id={id} />
+                            <SendMessageForm id={id}/>
                         </div>)
                     : <Preloader />
             }

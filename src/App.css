@@ -23,6 +23,10 @@
     width: 0;
 }
 
+.content_wrapper{
+    scrollbar-width: none;
+}
+
 .logWrap {
     margin-left: 50vh;
     margin-top: 15vh;

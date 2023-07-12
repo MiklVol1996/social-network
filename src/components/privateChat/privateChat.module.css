@@ -11,6 +11,10 @@
     width: 0;
 }
 
+.wrap{
+    scrollbar-width: none;
+}
+
 .friend,
 .me{
     display: flex;
