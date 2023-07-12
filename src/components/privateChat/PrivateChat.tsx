@@ -38,7 +38,7 @@ const PrivateChat: React.FC = React.memo(() => {
     if (!friendPhoto) {
         friendPhoto = defAva;
     }
-
+debugger
     useEffect(() => {
         if (isTopVisib) {
             if (id) { dispatch(getNextPortion(+id) as unknown as Action) }
@@ -57,17 +57,23 @@ const PrivateChat: React.FC = React.memo(() => {
     useEffect(() => {
         if (isBottomVisib) { ref.current?.scrollIntoView(false) }
         if (!isBottomVisib) { lastMes.current?.scrollIntoView(true) }
+        if(!messages?.length){
+            debugger
+            ref.current?.scrollIntoView(true)
+        }
     }, [messages]);
 
     const onscroll = (e: React.UIEvent) => {
         const height = e.currentTarget.scrollHeight;
         const top = e.currentTarget.scrollTop;
+        console.log(height, top, window.screen.height);
+        
         if (!top && !isTopVisib) { setIsTopVisib(true) }
         if (top && isTopVisib) { setIsTopVisib(false) }
-        if (height - top < 850 && !isBottomVisib) { setIsBottomVisib(true) }
-        if (height - top > 660 && isBottomVisib) { setIsBottomVisib(false) }
-        if (height - top > 1000) { setIsDownVisib(true) }
-        if (height - top < 600) { setIsDownVisib(false) }
+        if (height - top < (window.screen.height / 1.16) && !isBottomVisib) { setIsBottomVisib(true) }
+        if (height - top > (window.screen.height / 1.16) && isBottomVisib) { setIsBottomVisib(false) }
+        if (height - top > (window.screen.height  * 1.35)) { setIsDownVisib(true) }
+        if (height - top < (window.screen.height * 1.35)) { setIsDownVisib(false) }
     }
 
     const onClick = () => {
@@ -107,6 +113,7 @@ const PrivateChat: React.FC = React.memo(() => {
                         </div>
                         :
                         <div className={classes.empty}>
+                            <div ref={ref}></div>
                             <div className={classes.emptyMes}>The list of mesages is empty</div>
                             <SendMessageForm id={id}/>
                         </div>)

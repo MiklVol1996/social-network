@@ -30,10 +30,14 @@ const Chat: React.FC = React.memo(() => {
     }, [messages])
 
     const onScroll = (e: React.UIEvent) => {
-        if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop > 1000 && !isVisib) {
+        const height = e.currentTarget.scrollHeight;
+        const top = e.currentTarget.scrollTop;
+        console.log(height, top, window.screen.height);
+        
+        if ((height - top > window.screen.height  * 1.35) && !isVisib) {
             setIsVisib(true);
         }
-        if (e.currentTarget.scrollHeight - e.currentTarget.scrollTop < 820 && isVisib) {
+        if ((height - top < window.screen.height  * 1.35) && isVisib) {
             setIsVisib(false);
         }
     }
