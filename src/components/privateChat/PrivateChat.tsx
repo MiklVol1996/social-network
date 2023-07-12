@@ -94,7 +94,7 @@ const PrivateChat: React.FC = React.memo(() => {
                                                         <div>{message.senderName}</div>
                                                         <div>{parceTime(message.addedAt)} </div>
                                                     </div>
-                                                    <img src={message.senderName === login ? myPhoto as string : friendPhoto as string}
+                                                    <img src={message.senderName === login ? (myPhoto ? myPhoto : defAva ) as string : friendPhoto as string}
                                                         className={classes.ava} />
                                                 </div>
                                             </div>
