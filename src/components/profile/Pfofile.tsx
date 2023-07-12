@@ -1,33 +1,23 @@
 import React from 'react';
 import classes from './profile.module.css';
-import PostsContainer from './posts/PostsContainer';
+import Posts from './posts/Posts';
 import ProfileInfo from './profileInfo/PfofileInfo';
-import { ProfileType } from '../../types/types';
 
 type Props = {
-    profile: ProfileType | null, 
-    sendStatusToServer: (text: string) => void, 
-    status: string | null, 
-    uploadNewPhoto: (data: any) => void, 
     isOwner: boolean, 
-    updateProfileData: () => void,
 }
 
-const Profile: React.FC<Props> = ({ profile, sendStatusToServer, status, 
-     uploadNewPhoto, isOwner, updateProfileData }) => {
-        
+const Profile: React.FC<Props> = React.memo(({isOwner}) => {
     return (
         <div className={classes.content}>
             <div className={classes['main-content-block']}>
                 <div className={classes.profileInfoWrap}>
-                    <ProfileInfo profile={profile} sendStatusToServer={sendStatusToServer}
-                    status={status} uploadNewPhoto={uploadNewPhoto} isOwner={isOwner}
-                    updateProfileData={updateProfileData} />
+                    <ProfileInfo isOwner={isOwner} />
                 </div>
-                <PostsContainer />
+                {isOwner ? <Posts /> : ''} 
             </div>
         </div>
     )
-}
+})
 
 export default Profile;

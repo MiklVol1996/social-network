@@ -106,4 +106,35 @@ export type PostType = {
     likesCount: string,
 }
 
+export type UsersFilter = {
+    filter: string,
+    selectValue: boolean | null,
+}
+
+export type MessageType = {
+    userId: number, 
+    userName: string, 
+    message: string, 
+    photo: string,
+}
+
+export type Dialog = {
+    hasNewMessages: boolean,
+    id: number,
+    lastDialogActivityDate: string,
+    lastUserActivityDate:  string,
+    newMessagesCount: number,
+    photos: PhotosProfileType,
+    userName: string,
+}
+
+export type privateMessage = {
+    addedAt: string,
+    body: string,
+    id: string,
+    recipientId: number,
+    senderId: number,
+    senderName: string,
+    viewed: boolean,
+}
 

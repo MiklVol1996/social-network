@@ -8,20 +8,20 @@ import { useState, useEffect, ChangeEvent } from 'react';
 import EditProfileDataForm from './editProfileDataForm/EditProfileDataForm';
 import close from '../../../images/close.jpg';
 import { ProfileType } from '../../../types/types';
+import { useDispatch, useSelector } from 'react-redux';
+import { giveProfile } from '../../../redux/selectors';
+import { uploadNewPhoto } from '../../../redux/profilePageReducer';
+import { Action } from 'redux';
 
 type Props = {
-    profile: ProfileType | null,
-    sendStatusToServer: (text: string) => void,
-    status: string | null,
-    uploadNewPhoto: (data: any) => void,
     isOwner: boolean,
-    updateProfileData: () => void,
 }
 
-const ProfileInfo: React.FC<Props> = ({ profile, sendStatusToServer, status,
-    uploadNewPhoto, isOwner, updateProfileData }) => {
+const ProfileInfo: React.FC<Props> = React.memo(({ isOwner }) => {
 
     let [editMode, setEditMode] = useState(false);
+    const profile = useSelector(giveProfile);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         if (isOwner) {
@@ -30,7 +30,7 @@ const ProfileInfo: React.FC<Props> = ({ profile, sendStatusToServer, status,
     }, [profile]);
 
     const onPhotoLoaded = (e: ChangeEvent<HTMLInputElement>) => {
-        uploadNewPhoto(e.target.files);
+        dispatch(uploadNewPhoto(e.target.files) as unknown as Action);
     }
 
     return (
@@ -40,8 +40,7 @@ const ProfileInfo: React.FC<Props> = ({ profile, sendStatusToServer, status,
                     ? <div className={classes.profWrap}>
                         <div className={classes.left}>
                             <div className={classes.description}>
-                                <Status sendStatusToServer={sendStatusToServer}
-                                    status={status} isOwner={isOwner} />
+                                <Status isOwner={isOwner} />
                             </div>
                             <div className={classes.avaWrap}>
                                 <img src={profile.photos.large || defaultAva} />
@@ -59,7 +58,7 @@ const ProfileInfo: React.FC<Props> = ({ profile, sendStatusToServer, status,
                             editMode
                                 ? <div className={classes.formWrap}>
                                     <img src={close} onClick={() => setEditMode(false)} />
-                                    <EditProfileDataForm profile={profile} updateProfileData={updateProfileData} />
+                                    <EditProfileDataForm profile={profile} />
                                 </div>
                                 : <ProfileData profile={profile} isOwner={isOwner}
                                     setEditMode={setEditMode} />
@@ -69,6 +68,6 @@ const ProfileInfo: React.FC<Props> = ({ profile, sendStatusToServer, status,
             }
         </div>
     )
-}
+})
 
 export default ProfileInfo;

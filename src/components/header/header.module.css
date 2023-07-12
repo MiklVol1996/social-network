@@ -53,3 +53,7 @@
     color: rgb(255, 234, 0);
     cursor: pointer;
 }
+
+.logout{
+    margin-top: 5px;
+}

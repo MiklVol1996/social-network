@@ -1,15 +1,18 @@
 import { apiUsers } from "../api/apiUsers";
-import { UserType, ResultCodeEnum } from "../types/types";
+import { UserType, ResultCodeEnum, UsersFilter } from "../types/types";
 import { GetActionTypes, ThunkType } from "./store";
 
 let initialState = {
     users: [] as Array<UserType>,
     currentPage: 1,
-    pageSize: 4,
-    totalCount: 0,
+    pageSize: 8,
     numOfPages: 0,
     isFetching: false,
-    followingInProgress: [] as Array<number>, //array of users id
+    followingInProgress: [] as Array<number>, //array of users id,
+    filter: {
+        filter: '',
+        selectValue: null as boolean | null,
+    },
 }
 
 const usersPageReducer = (state = initialState, action: ActionsType): InitialStateType => {
@@ -43,12 +46,6 @@ const usersPageReducer = (state = initialState, action: ActionsType): InitialSta
                 currentPage: action.page,
             }
         }
-        case 'SET-TOTAL-COUNT': {
-            return {
-                ...state,
-                totalCount: action.count,
-            }
-        }
         case 'SET-IS-FETCHING': {
             return {
                 ...state,
@@ -71,13 +68,19 @@ const usersPageReducer = (state = initialState, action: ActionsType): InitialSta
                 })
             }
         }
+        case 'SET-FILTER': {
+            return {
+                ...state,
+               filter: {...action.filter},
+            }
+        }
         default: {
             return state;
         }
     }
 }
 
-const actions = {
+export const actions = {
     followUnfollow: (id: number) => ({ type: 'FOLLOW-UNFOLLOW', userId: id } as const),
     setUsers: (users: Array<UserType>) => ({ type: 'SET-USERS', users: users } as const),
     setNumOfPages: (pages: number) => ({ type: 'SET-NUM-OF-PAGES', pages: pages } as const),
@@ -86,35 +89,41 @@ const actions = {
     setIsFetching: (isFetching: boolean) => ({ type: 'SET-IS-FETCHING', isFetching: isFetching } as const),
     addFolowProg: (id: number) => ({ type: 'ADD-TO-FOLLOWING-IN-PROGRESS', id: id } as const),
     removeFolowProg: (id: number) => ({ type: 'REMOVE-FROM-FOLLOWING-IN-PROGRESS', id: id } as const),
+    setFilter: (filter: string, selectValue: boolean | null) => ({type: 'SET-FILTER', filter: {filter, selectValue}} as const),
 }
 
 
-export const getFollowUnfollow = (isFollowed: boolean, id: number): ThunkType<ActionsType> => 
-async (dispatch) => {
-    const method = isFollowed ? apiUsers.removeFriend : apiUsers.addFriend;
-    dispatch(actions.addFolowProg(id));
-    const data = await method(id);
-    if (data.resultCode === ResultCodeEnum.Success) {
-        dispatch(actions.followUnfollow(id));
-        dispatch(actions.removeFolowProg(id));
+export const getFollowUnfollow = (isFollowed: boolean, id: number): ThunkType<ActionsType> =>
+    async (dispatch) => {
+        const method = isFollowed ? apiUsers.removeFriend : apiUsers.addFriend;
+        dispatch(actions.addFolowProg(id));
+        const data = await method(id);
+        if (data.resultCode === ResultCodeEnum.Success) {
+            dispatch(actions.followUnfollow(id));
+            dispatch(actions.removeFolowProg(id));
+        }
     }
-}
 
-export const getUsersFirstTime = (currentPage: number, pageSize: number): ThunkType<ActionsType> => 
+export const getUsersFirstTime = (currentPage: number, pageSize: number, filter: UsersFilter): ThunkType<ActionsType> =>
+    async (dispatch) => {
+        dispatch(actions.setIsFetching(true));
+        const data = await apiUsers.getUsers(currentPage, pageSize, filter);
+        setTimeout(() => {
+            dispatch(actions.setIsFetching(false));
+            let numOfPages = Math.ceil(data.totalCount / pageSize);
+            dispatch(actions.setNumOfPages(numOfPages));
+            dispatch(actions.setUsers(data.items));
+            dispatch(actions.setFilter(filter.filter, filter.selectValue));
+            dispatch(actions.setCurrentPage(currentPage));
+        }, 1700);
+    }
+
+export const getUsers = (p: number, pageSize: number, filter: UsersFilter): ThunkType<ActionsType> => 
 async (dispatch) => {
-    dispatch(actions.setIsFetching(true));
-    const data = await apiUsers.getUsers(currentPage, pageSize);
-    setTimeout(() => {
-        dispatch(actions.setIsFetching(false));
-        let numOfPages = Math.ceil(data.totalCount / pageSize);
-        dispatch(actions.setNumOfPages(numOfPages));
-        dispatch(actions.setUsers(data.items));
-        dispatch(actions.setTotalCount(data.totalCount));
-    }, 1700);
-}
-
-export const getUsers = (p: number, pageSize: number): ThunkType<ActionsType> => async (dispatch) => {
-    const data = await apiUsers.getUsers(p, pageSize);
+    const data = await apiUsers.getUsers(p, pageSize, filter);
+    let numOfPages = Math.ceil(data.totalCount / pageSize);
+    dispatch(actions.setNumOfPages(numOfPages));
+    dispatch(actions.setFilter(filter.filter, filter.selectValue));
     dispatch(actions.setUsers(data.items));
     dispatch(actions.setCurrentPage(p));
 }

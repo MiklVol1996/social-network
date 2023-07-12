@@ -1,0 +1,39 @@
+.wrap img{
+    width: 60px;
+}
+
+.wrap{
+    margin-bottom: 10px;
+    border-bottom: 1px solid #414141;
+    width: 670px;
+}
+
+.name{
+    margin-bottom: 5px;
+    color: #ffffff;
+    font-size: 14px;
+}
+
+.message{
+    border: dashed 1px rgb(128, 128, 128);
+    padding: 2px 20px;
+    max-width: 550px;
+    width: fit-content;
+    height: fit-content;
+    background-color: #000000;
+    border-radius: 12px;
+    font-size: 16px;
+    color: #ffc003;
+    margin-left: 30px;
+    word-wrap:break-word;
+}
+
+.image{
+    margin-bottom: 5px;
+}
+
+.flex{
+    display: flex;
+    align-items: center;
+}
+

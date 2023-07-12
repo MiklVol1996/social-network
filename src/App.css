@@ -1,15 +1,16 @@
-.app-wrapper{
+.app-wrapper {
     width: 1000px;
     margin: 0 auto;
     display: grid;
     grid-template-rows: 70px 1fr;
     grid-template-columns: 2fr 10fr;
-    grid-template-areas:  
-    "h h"
-    "n c";
+    grid-template-areas:
+        "h h"
+        "n c";
+    position: relative;
 }
 
-.content_wrapper{
+.content_wrapper {
     grid-area: c;
     height: 90vh;
     overflow: scroll;
@@ -20,51 +21,13 @@
 
 .content_wrapper::-webkit-scrollbar {
     width: 0;
-  }
-
-.count{
-    color: white;
 }
 
-.logWrap{
+.logWrap {
     margin-left: 50vh;
-    margin-top: 20vh;
+    margin-top: 15vh;
 }
 
-.eee{
-    color: aliceblue;
-}
-
-.wer{
-    width: 210px;
-    border: 1px red solid;
-}
-
-.form input{
+.form input {
     width: 200px;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

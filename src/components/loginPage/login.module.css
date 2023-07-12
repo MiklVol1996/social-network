@@ -8,3 +8,16 @@
     color: white;
 }
 
+.free{
+    margin-top: 20px;
+}
+
+.free span{
+    color: yellow;
+}
+
+.title{
+    margin-bottom: 5px;
+    text-decoration: underline;
+}
+

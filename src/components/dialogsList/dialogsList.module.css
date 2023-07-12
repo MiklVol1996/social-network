@@ -1,0 +1,45 @@
+.wrap span{
+    color: yellow;
+}
+
+.flex{
+    display: flex;
+    border: 1px rgb(226, 226, 226) solid;
+    margin: 15px 10px;
+    background-color: #5a5a5a;
+    border-radius: 12px;
+    width: 550px;
+    margin-left: 20px;
+}
+
+.flex:hover{
+    border: 1px solid rgb(87, 87, 87);
+}
+
+.imgWrap img{
+    width: 65px;
+    height: 60px;
+    border-radius: 50%;
+    border: 1px solid white;
+}
+
+.infoWrap{
+    display: flex;
+    justify-content: space-between;
+    width: 455px;
+    margin-left: 15px;
+}
+
+.name{
+    font-size: 19px;
+    color: rgb(255, 255, 255);
+}
+
+.info{
+    font-size: 14px;
+    color: rgb(204, 204, 204);
+}
+
+.notif{
+    color: red;
+}

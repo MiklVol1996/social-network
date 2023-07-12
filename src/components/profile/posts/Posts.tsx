@@ -2,16 +2,16 @@ import React, { useMemo, useState } from 'react';
 import Post from './post/Post';
 import classes from './posts.module.css';
 import Button from '../../common/button/Button';
-import { PostType } from '../../../types/types';
+import { givePosts } from '../../../redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { actions } from '../../../redux/profilePageReducer';
 
-type Props = {
-    posts: Array<PostType>,
-    addPost: (text: string) => void,
-}
 
-const Posts: React.FC<Props> = ({ posts, addPost }) => {
+const Posts: React.FC = React.memo(() => {
 
     let [postText, setPostText] = useState('');
+    const posts = useSelector(givePosts);
+    const dispatch = useDispatch();
 
     let postsAr = useMemo(() => {
         return posts.map((post, i) => <Post message={post.message}
@@ -19,7 +19,7 @@ const Posts: React.FC<Props> = ({ posts, addPost }) => {
     }, [posts])
 
     const onPostAdded = () => {
-        addPost(postText);
+        dispatch(actions.addPost(postText));
         setPostText('');
     }
 
@@ -34,6 +34,6 @@ const Posts: React.FC<Props> = ({ posts, addPost }) => {
             {postsAr}
         </div>
     )
-}
+})
 
 export default Posts;

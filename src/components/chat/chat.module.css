@@ -1,0 +1,32 @@
+.title{
+    font-size: 26px;
+    margin-bottom: 25px;
+    color:  #1e9dc4;
+}
+
+.wrap{
+    padding: 15px;
+    height: 530px;
+    overflow: scroll;
+    position: relative;
+}
+
+.wrap::-webkit-scrollbar {
+    width: 0;
+}
+
+.down{
+    position: fixed;
+    top: 80px;
+    right: 600px;
+    width: 70px;
+}
+
+.down:hover{
+    width: 80px;
+    transition: 100ms;
+}
+
+.hidden{
+    display: none;
+}

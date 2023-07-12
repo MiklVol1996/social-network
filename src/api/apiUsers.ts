@@ -1,5 +1,5 @@
 import { instance } from "./apiSettings";
-import { ResponseType, UserType } from "../types/types";
+import { ResponseType, UserType, UsersFilter } from "../types/types";
 
 
 export const apiUsers = {
@@ -12,8 +12,10 @@ export const apiUsers = {
         const response = await instance.post<ResponseType>('follow/' + id);
         return response.data;
     },
-    async getUsers(currentPage: number, pageSize: number) {
-        const response = await instance.get<UsersResponseDataType>(`users?page=${currentPage}&count=${pageSize}`);
+    async getUsers(currentPage: number, pageSize: number, filter: UsersFilter) {
+        const response = await instance.get<UsersResponseDataType>(
+            `users?page=${currentPage}&count=${pageSize}&term=${filter.filter}&friend=${filter.selectValue}`  
+            );
         return response.data;
     },
 }

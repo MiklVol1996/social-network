@@ -1,26 +1,31 @@
 import './App.css';
-import React from 'react';
+import React, { Suspense, useRef, RefObject, useEffect } from 'react';
 import Nav from './components/navbar/Nav';
 import ProfileContainer from './components/profile/ProfileContainer';
 import { Routes, Route, Navigate } from 'react-router-dom';
-import DialogsContainer from './components/dialogs/DialogsContainer';
+import Dialogs from './components/dialogsList/DialogsList';
 import UsersContainer from './components/users/UsersContainer';
-import HeaderContainer from './components/header/HeaderContainer';
-import Login from './components/loginPage/LoginContainer';
-import { connect } from 'react-redux';
+import Header from './components/header/Header';
+import Login from './components/loginPage/Login';
+import { useDispatch, useSelector } from 'react-redux';
 import { getInitialized } from './redux/app.reducer';
-import { useEffect } from 'react';
-import { AppStateType } from './redux/store';
+import Preloader from './components/common/preloader/Preloader';
+import PrivateChat from './components/privateChat/PrivateChat';
+import { giveIsInitialized } from './redux/selectors';
+import { Action } from 'redux';
 
-type Props = {
-  isInitialized: boolean,
-  getInitialized: () => void,
-}
 
-const App: React.FC<Props> = ({isInitialized, getInitialized}) => {
+const Chat = React.lazy(() => import('./components/chat/Chat'))
+const News = React.lazy(() => import('./components/news/News'))
+
+const App: React.FC = () => {
+
+  const ref = useRef() as RefObject<HTMLDivElement>;
+  const isInitialized = useSelector(giveIsInitialized); 
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    getInitialized();
+    dispatch(getInitialized() as unknown as Action);
   }, [])
 
   if (!isInitialized) {
@@ -33,35 +38,28 @@ const App: React.FC<Props> = ({isInitialized, getInitialized}) => {
 
   return (
     <div className='app-wrapper'>
-      <HeaderContainer />
+      <Header />
       <Nav />
       <div className='content_wrapper'>
         <Routes>
           <Route path='/social-network-js' element={<Navigate to='/profile' />} />
+          <Route path='/login' element={<Navigate to='/profile' />} />
           <Route path='/profile/:userId?' element={<ProfileContainer />} />
-          <Route path='/dialogs/*' element={<DialogsContainer />} />
+          <Route path='/dialogs' element={<Dialogs />} />
           <Route path='/users' element={<UsersContainer />} />
+          <Route path='/private/:id' element={<PrivateChat />} />
+          <Route path='/news' element={<Suspense fallback={<Preloader/>}><News /></Suspense>} />
+          <Route path='/chat' element={<Suspense fallback={<Preloader/>}><Chat /></Suspense>} />        
         </Routes>
+        <div ref={ref}></div>
       </div>
     </div>
   )
 }
 
-const mapStateToProps = (state: AppStateType): MapStateType => {
-  return {
-    isInitialized: state.app.isInitialized,
-  }
-}
+export default App;
 
-export default connect<MapStateType, MapDispatchType, {}, AppStateType>(mapStateToProps, { getInitialized })(App);
 
-type MapStateType = {
-  isInitialized: boolean,
-}
-
-type MapDispatchType = {
-  getInitialized: () => void,
-}
 
 
 

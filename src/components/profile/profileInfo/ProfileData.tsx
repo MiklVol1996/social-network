@@ -9,7 +9,7 @@ type Props = {
     setEditMode: (is: boolean) => void,
 }
 
-const ProfileData: React.FC<Props> = ({ profile, isOwner, setEditMode }) => {
+const ProfileData: React.FC<Props> = React.memo(({ profile, isOwner, setEditMode }) => {
     return (
         <div className={classes.right}>
             <div className={classes.about}>
@@ -43,6 +43,6 @@ const ProfileData: React.FC<Props> = ({ profile, isOwner, setEditMode }) => {
             </div>
         </div>
     )
-}
+})
 
 export default ProfileData;

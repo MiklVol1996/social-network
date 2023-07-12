@@ -9,7 +9,7 @@ type PropsType = {
     initValue: string,
 }
 
-const StatusForm: React.FC<PropsType> = ({ onStatusUpdate, initValue }) => {
+const StatusForm: React.FC<PropsType> = React.memo(({ onStatusUpdate, initValue }) => {
 
     const { handleSubmit, control, formState: {errors}} = useForm<StatusFormType>({ 
         defaultValues: { status: initValue }, mode: "onChange"
@@ -28,7 +28,7 @@ const StatusForm: React.FC<PropsType> = ({ onStatusUpdate, initValue }) => {
             </form>
         </div>
     )
-}
+})
 
 export default StatusForm;
 

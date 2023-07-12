@@ -1,0 +1,24 @@
+.wrap{
+    display: flex;
+}
+
+.wrap input{
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    margin-right: 10px;
+    background-color: #c4c4c4;
+}
+
+.wrap select{
+    border: none;
+    outline: none;
+    border-radius: 12px;
+    margin-right: 10px;
+    background-color: #c4c4c4;
+}
+
+
+.wrap input:hover{
+    cursor: pointer;
+}

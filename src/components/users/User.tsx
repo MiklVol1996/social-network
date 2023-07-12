@@ -8,7 +8,7 @@ type PropsType = {
     defaultAva: any
 }
 
-const User: React.FC<PropsType> = ({ user, defaultAva }) => {
+const User: React.FC<PropsType> = React.memo(({ user, defaultAva }) => {
     return (
         <div className={classes.userWrap}>
             <div className={classes.photo}>
@@ -28,5 +28,6 @@ const User: React.FC<PropsType> = ({ user, defaultAva }) => {
                 : <></>}
         </div>
     )
-}
+})
+
 export default User;

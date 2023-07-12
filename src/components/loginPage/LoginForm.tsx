@@ -5,12 +5,10 @@ import { apiLogin } from "../../api/apiLogin";
 import { ResultCodeEnum, ResultCodeWithCaptchaEnum } from "../../types/types";
 import { CreateController } from "../common/fieldCreator/createControllers";
 import { LoginFormNames } from "../../types/types";
-
-type PropsType = {
-    login: () => void,
-    captchaURL: string | null,
-    setCaptchaURL: (captcha: string | null) => void,
-}
+import { useDispatch, useSelector } from "react-redux";
+import { giveCaptchURL } from "../../redux/selectors";
+import { actionCreators, login } from "../../redux/authReducer";
+import { Action } from "redux";
 
 type FormType = {
     email: string,
@@ -19,21 +17,25 @@ type FormType = {
     captcha?: string,
 }
 
-const LoginForm: React.FC<PropsType> = ({ login, setCaptchaURL, captchaURL }) => {
-    const { control, handleSubmit, register, setError, formState: { errors } } = useForm<FormType>({ 
-        mode: 'onTouched' 
+const LoginForm: React.FC = React.memo(() => {
+
+    const { control, handleSubmit, register, setError, formState: { errors } } = useForm<FormType>({
+        mode: 'onTouched'
     });
+
+    const captchaURL = useSelector(giveCaptchURL);
+    const dispatch = useDispatch();
 
     const onSubmit = async (data: FormType) => {
         const response = await apiLogin.login(data);
         if (response.resultCode === ResultCodeEnum.Success) {
-            login();
+            dispatch(login() as unknown as Action);
         } else {
             let message = response.messages.length > 0 ? response.messages[0] : 'some error';
             setError('rememberMe', { message: message });
             if (response.resultCode === ResultCodeWithCaptchaEnum.CaptchaIsRequired) {
                 const captchaURL = await apiLogin.getCaptchaURL();
-                setCaptchaURL(captchaURL);
+                dispatch(actionCreators.setCaptchaURL(captchaURL));
             }
         }
     }
@@ -43,7 +45,7 @@ const LoginForm: React.FC<PropsType> = ({ login, setCaptchaURL, captchaURL }) =>
             <form onSubmit={handleSubmit(onSubmit)}>
                 <div className={classes.emailInput}>
                     {CreateController<Extract<keyof LoginFormNames, string>>("email", errors.email?.message,
-                    50, control, true, true, 'Enter your login...')}
+                        50, control, true, true, 'Enter your login...')}
                 </div>
                 {CreateController<Extract<keyof LoginFormNames, string>>("password", errors.password?.message,
                     50, control, true, false, 'Enter your password...', 'password')}
@@ -57,8 +59,8 @@ const LoginForm: React.FC<PropsType> = ({ login, setCaptchaURL, captchaURL }) =>
                         ?
                         <div>
                             <img src={captchaURL} />
-                            {CreateController<Extract<keyof LoginFormNames, string>>("captcha", 
-                            errors.captcha?.message, 50, control, true, false, 'Enter captcha...')}
+                            {CreateController<Extract<keyof LoginFormNames, string>>("captcha",
+                                errors.captcha?.message, 50, control, true, false, 'Enter captcha...')}
                         </div>
                         : ''}
                 </div>
@@ -66,7 +68,7 @@ const LoginForm: React.FC<PropsType> = ({ login, setCaptchaURL, captchaURL }) =>
             </form>
         </div>
     )
-}
+})
 
 export default LoginForm;
 

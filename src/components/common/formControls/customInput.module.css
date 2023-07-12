@@ -10,10 +10,11 @@
 
 .inputWrap input{
     width: 210px;  
-    background-color: #e2e2e2;
+    background-color: #d4d4d4;
     height: 22px;
     border: none;
     outline: none;
+    border-radius: 12px;
 }
 
 .inputError input,

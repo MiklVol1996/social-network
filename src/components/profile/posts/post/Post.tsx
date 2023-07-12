@@ -7,7 +7,7 @@ type Props = {
     likesCount: string,
 }
 
-const Post: React.FC<Props> = (props) => {
+const Post: React.FC<Props> = React.memo((props) => {
     return (
         <div className={classes.post_wrap}>
             <div className={classes.post}>
@@ -19,6 +19,6 @@ const Post: React.FC<Props> = (props) => {
             </div>
         </div>
     )
-}
+})
 
 export default Post;

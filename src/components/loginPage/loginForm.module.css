@@ -46,6 +46,8 @@
 
 .button{
     width: 70px;
+    height: 25px;
+    border-radius: 12px;
 }
 
 .captcha img{

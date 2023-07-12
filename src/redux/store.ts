@@ -9,6 +9,10 @@ import { applyMiddleware } from "redux";
 import thunk from "redux-thunk";
 import { reducer as formReducer } from "redux-form";
 import { ThunkAction } from "redux-thunk";
+import chatReducer from "./chatPageReducer";
+import newsPageReducer from "./newsReducer";
+import navBarReducer from "./navBarReducer";
+import privateChatReducer from "./privateChatReducer";
 
 
 let rootReducer = combineReducers({
@@ -18,6 +22,10 @@ let rootReducer = combineReducers({
     auth: authReducer,
     form: formReducer,
     app: appReducer,
+    chatPage: chatReducer,
+    newsPage: newsPageReducer,
+    navBar: navBarReducer,
+    privateChat: privateChatReducer,
 });
 
 type RootReducerType = typeof rootReducer;

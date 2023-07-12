@@ -1,6 +1,5 @@
 import { Controller } from "react-hook-form";
 import Input from "../formControls/CustomInputForm";
-import { EditProfileFormNamesType, LoginFormNames } from "../../../types/types";
 
 export function CreateController <T extends string>(name: T, errorMes: string | undefined, maxLength: number,
     control: any, required: boolean, autoFocus: boolean, placeholder?: string, type?: string): React.ReactNode{
@@ -17,4 +16,6 @@ export function CreateController <T extends string>(name: T, errorMes: string | 
                 }}/>
     )
 }
+
+
 

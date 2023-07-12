@@ -1,50 +1,60 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import classes from './nav.module.css';
-import { NavLink } from 'react-router-dom';
+import { Navigate, NavLink } from 'react-router-dom';
+import { giveNewMessagesCount } from '../../redux/selectors';
+import { useDispatch, useSelector } from 'react-redux';
+import { Action } from 'redux';
+import { startCheckingNewMessages } from '../../redux/navBarReducer';
 
-const Nav: React.FC = () => {
 
-  function getClassName(str: string){
-    let className = 'active' + str;
-    return function ({isActive}: {isActive: boolean}){
-      return isActive? classes[className] : classes.usual;
-    }
-  }
+const Nav: React.FC = React.memo(() => {
+
+  const newMessagesCount = useSelector(giveNewMessagesCount);
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+   dispatch(startCheckingNewMessages() as unknown as Action);
+  }, []);
 
   return (
-    <nav>
-      <div className={classes['nav-item']}>
-          <NavLink to='/profile' className={getClassName('Green')}>
-            <div>Profile</div>
-            <div className={classes.innerGreen}></div>
-           </NavLink>
-      </div>
-      <div className={classes['nav-item']}>
-          <NavLink to='/dialogs' className={getClassName('Red')}>
-            <div>Messages</div>
-            <div className={classes.innerRed}></div>
-           </NavLink>
-      </div>
-      <div className={classes['nav-item']}>
-          <NavLink to='/music' className={getClassName('Blue')}>
-            <div>Music</div>
-            <div className={classes.innerBlue}></div>
-           </NavLink>
-      </div>
-      <div className={classes['nav-item']}>
-          <NavLink to='/news' className={getClassName('Purple')}>
-            <div>News</div>
-            <div className={classes.innerPurple}></div>
-           </NavLink>
-      </div>
-      <div className={classes['nav-item']}>
-          <NavLink to='/users' className={getClassName('Yellow')}>
-            <div>Users</div>
-            <div className={classes.innerYellow}></div>
-           </NavLink>
-      </div>
+    <nav className={classes.wrap}>
+      {navBarItemCreater('profile', 'Green', 'Profile', 'innerGreen')}
+      {navBarItemCreater('dialogs', 'Red', 'Dialogs', 'innerRed', newMessagesCount)}
+      {navBarItemCreater('chat', 'Blue', 'Chat', 'innerBlue',)}
+      {navBarItemCreater('news', 'Purple', 'News', 'innerPurple')}
+      {navBarItemCreater('users', 'Yellow', 'Users', 'innerYellow')}
     </nav>
+  )
+})
+
+export default Nav;
+
+function getClassName(str: string) {
+  let className = 'active' + str;
+  return function ({ isActive }: { isActive: boolean }) {
+    return isActive ? classes[className] : classes.usual;
+  }
+}
+
+function navBarItemCreater(path: string, color: string, title: string, className: string, rest?: number) {
+  const newPath = '/' + path;
+  return (
+    <div className={classes['nav-item']}>
+      <NavLink to={newPath} className={getClassName(color)}>
+        <div>
+          <span className={classes.title} onClick={() => <Navigate to='/dialogs'/>}>{title}</span>
+          <span className={rest ? classes['visible'] : classes['nonVisible']}>{rest}</span>
+        </div>
+        <div className={classes[className]}></div>
+      </NavLink>
+    </div>
   )
 }
 
-export default Nav;
+
+
+
+
+
+
+

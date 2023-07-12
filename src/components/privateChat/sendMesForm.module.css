@@ -1,0 +1,17 @@
+.wrap input{
+    background-color: #c4c4c4;
+    border-radius: 12px;
+    width: 400px;
+    height: 45px;
+    border: none;
+    outline: none;
+}
+
+.wrap{
+    display: flex;
+    margin-top: 15px;
+    width: 520px;
+    justify-content: space-between;
+    align-items: center;
+    margin: 0 auto;
+}

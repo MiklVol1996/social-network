@@ -7,10 +7,12 @@ import { ProfileType, ContactsProfileType, EditProfileFormNamesType,
 import { apiProfile } from '../../../../api/apiProfile';
 import { CreateController } from '../../../common/fieldCreator/createControllers';
 import { ErrorMessageHandler } from '../../../utils/errorMessageHandler';
+import { updateProfileData } from '../../../../redux/profilePageReducer';
+import { useDispatch } from 'react-redux';
+import { Action } from 'redux';
 
 type PropsType = {
     profile: ProfileType,
-    updateProfileData: () => void
 }
 
 type FormTypes = {
@@ -21,7 +23,9 @@ type FormTypes = {
     contacts: ContactsProfileType
 }
 
-const EditProfileDataForm: React.FC<PropsType> = ({ profile, updateProfileData }) => {
+const EditProfileDataForm: React.FC<PropsType> = React.memo(({ profile }) => {
+
+    const dispatch = useDispatch();
 
     const { control, handleSubmit, formState: { errors }, setError, register } = useForm<FormTypes>({
         mode: 'onChange',
@@ -31,7 +35,7 @@ const EditProfileDataForm: React.FC<PropsType> = ({ profile, updateProfileData }
     const onSubmit = async (data: FormTypes) => {
         const answer = await apiProfile.updatePforileData({ ...data, userId: profile.userId });
         if (answer.resultCode === ResultCodeEnum.Success) {
-            updateProfileData();
+            dispatch(updateProfileData() as unknown as Action);
         } else {
             ErrorMessageHandler(answer.messages, setError);
         }
@@ -79,6 +83,6 @@ const EditProfileDataForm: React.FC<PropsType> = ({ profile, updateProfileData }
             </div>
         </form>
     )
-}
+})
 
 export default EditProfileDataForm;

@@ -1,18 +1,22 @@
 import React, { useMemo } from 'react';
 import classes from './pagination.module.css';
+import { UsersFilter } from '../../../types/types';
+import { useDispatch } from 'react-redux';
+import { Action } from 'redux';
 
 type Props = {
     currentPage: number,
     numOfPages: number,
     pageSize: number,
-
+    filter: UsersFilter,
     swithPage: (str: string) => void,
-    getUsers: (pageNumber: number, pageSize: number) => void,
+    getUsers: (pageNumber: number, pageSize: number, filter: UsersFilter) => void,
 }
 
-const Pagination: React.FC<Props> = ({ currentPage, numOfPages, swithPage,
-    getUsers, pageSize }) => {
+const Pagination: React.FC<Props> = React.memo(({ currentPage, numOfPages, swithPage,
+    getUsers, pageSize, filter }) => {
 
+    const dispatch = useDispatch();
 
     let pages = useMemo(() => {
         let arr = [] as Array<string>;
@@ -28,7 +32,11 @@ const Pagination: React.FC<Props> = ({ currentPage, numOfPages, swithPage,
     }, [currentPage, numOfPages]);
 
     const getClassName = (p: number, curPage: number): string => {
-        return  p === curPage ? classes.active : classes.usual;
+        return p == curPage ? classes.active : classes.usual;
+    }
+
+    const onPageClick = (p: number) => {
+        dispatch(getUsers(p, pageSize, filter) as unknown as Action)
     }
 
     return (
@@ -39,7 +47,7 @@ const Pagination: React.FC<Props> = ({ currentPage, numOfPages, swithPage,
             {pages.map((p, i) => {
                 return (
                     <span key={i} className={getClassName(+p, currentPage)}
-                        onClick={() => getUsers(+p, pageSize)}>{p}</span>
+                        onClick={() => onPageClick(+p)}>{p}</span>
                 )
             })}
             <button className={classes.ahead} onClick={() => swithPage('+')}>
@@ -47,6 +55,7 @@ const Pagination: React.FC<Props> = ({ currentPage, numOfPages, swithPage,
             </button>
         </div>
     )
-}
+})
 
 export default Pagination;
+

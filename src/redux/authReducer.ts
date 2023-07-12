@@ -2,6 +2,7 @@ import { apiLogin } from "../api/apiLogin";
 import { actions, ActionsType as ActionsTypeFromPfofile } from "./app.reducer";
 import { GetActionTypes, ThunkType } from "./store";
 import { ResultCodeEnum } from "../types/types";
+import { apiProfile } from "../api/apiProfile";
 
 
 let initialState = {
@@ -10,6 +11,7 @@ let initialState = {
     email: null as string | null,
     isAuth: false,
     captchaURL: null as string | null,
+    myName: '',
 }
 
 const authReducer = (state = initialState, action: ActionTypes): InitialStateType => {
@@ -21,6 +23,12 @@ const authReducer = (state = initialState, action: ActionTypes): InitialStateTyp
                 ...action.data,
             }
         }
+        case 'SET-MY-NAME': {
+            return {
+                ...state,
+                myName: action.name,
+            }
+        }
         default: {
             return state;
         }
@@ -30,6 +38,8 @@ const authReducer = (state = initialState, action: ActionTypes): InitialStateTyp
 export const actionCreators = {
      setAuthData: (login: string | null, id: number | null, email: string | null, isAuth: boolean) => ({ type: 'SET_AUTH_DATA', data: { id, login, email, isAuth } } as const),
      setCaptchaURL: (url: string | null) => ({ type: 'SET_CAPTCHA_URL', data: { captchaURL: url } } as const),
+     setMyName: (name: string) => ({ type: 'SET-MY-NAME', name: name } as const),
+
 }
 
 export const authMe = (): ThunkType<ActionTypes> => async (dispatch) => {
@@ -37,6 +47,8 @@ export const authMe = (): ThunkType<ActionTypes> => async (dispatch) => {
     if (data.resultCode === ResultCodeEnum.Success) {
         let { id, email, login } = data.data;
         dispatch(actionCreators.setAuthData(login, id, email, true));
+        const response = await apiProfile.getProfile(id);
+        dispatch(actionCreators.setMyName(response.fullName));
     } else {
         return 'not autorized';
     }

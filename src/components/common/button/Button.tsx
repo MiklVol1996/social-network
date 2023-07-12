@@ -7,8 +7,7 @@ type PropsType = {
     disabled?: boolean,
 }
 
-const Button: React.FC<PropsType> = ({ children, onClick, disabled }) => {
-    
+const Button: React.FC<PropsType> = React.memo(({ children, onClick, disabled }) => {
     return (
         <div className={classes.buttonWrap}>
             <button disabled={disabled} onClick={onClick}>
@@ -16,7 +15,6 @@ const Button: React.FC<PropsType> = ({ children, onClick, disabled }) => {
             </button>
         </div>
     )
-}
-
+})
 
 export default Button;
